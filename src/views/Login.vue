@@ -22,8 +22,8 @@ export default {
   components: {  },
   data() {
     return {
-      account:'huanghaobo',
-      password:'huanghaobo'
+      account:'huangyuxuan',
+      password:'huangyuxuan'
     };
   },
   methods:{

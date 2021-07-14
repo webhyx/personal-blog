@@ -1,6 +1,12 @@
 <template>
   <div class="upload-container">
-    <el-button :style="{background:color,borderColor:color}" icon="el-icon-upload" size="mini" type="primary" @click=" dialogVisible=true">
+    <el-button
+      :style="{ background: color, borderColor: color }"
+      icon="el-icon-upload"
+      size="mini"
+      type="primary"
+      @click="dialogVisible = true"
+    >
       upload
     </el-button>
     <el-dialog :visible.sync="dialogVisible">
@@ -15,16 +21,10 @@
         :action="dataUpdate"
         list-type="picture-card"
       >
-        <el-button size="small" type="primary">
-          Click upload
-        </el-button>
+        <el-button size="small" type="primary"> Click upload </el-button>
       </el-upload>
-      <el-button @click="dialogVisible = false">
-        Cancel
-      </el-button>
-      <el-button type="primary" @click="handleSubmit">
-        Confirm
-      </el-button>
+      <el-button @click="dialogVisible = false"> Cancel </el-button>
+      <el-button type="primary" @click="handleSubmit"> Confirm </el-button>
     </el-dialog>
   </div>
 </template>
@@ -33,21 +33,21 @@
 // import { getToken } from 'api/qiniu'
 
 export default {
-  name: 'EditorSlideUpload',
+  name: "EditorSlideUpload",
   props: {
     color: {
       type: String,
-      default: '#1890ff'
-    }
+      default: "#1890ff",
+    },
   },
   data() {
     return {
       dialogVisible: false,
-      dataUpdate:`http://121.40.125.179/Blob/ImgUpdate?token=${this.$store.state.cookie.token}`,
-      imgUrlList:[],
+      dataUpdate: `http://121.40.125.179/Blob/ImgUpdate?token=${this.$store.state.cookie.token}`,
+      imgUrlList: [],
       listObj: {},
-      fileList: []
-    }
+      fileList: [],
+    };
   },
   methods: {
     // checkAllSuccess() {
@@ -59,19 +59,17 @@ export default {
       //   this.$message('Please wait for all images to be uploaded successfully. If there is a network problem, please refresh the page and upload again!')
       //   return
       // }
-      this.$emit('successCBK', this.imgUrlList)
-      this.imgUrlList = []
-      this.listObj = {}
-      this.fileList = []
-      this.dialogVisible = false
+      this.$emit("successCBK", this.imgUrlList);
+      this.imgUrlList = [];
+      // this.listObj = {}
+      this.fileList = [];
+      this.dialogVisible = false;
     },
-    handleSuccess(response, file,fileList) {
-      const imgUrlRes = fileList.map(item => {
-        return item = `http://121.40.125.179${item.response.result.msg}`
-
-      })
-      this.imgUrlList = imgUrlRes
-      console.log(imgUrlRes);
+    handleSuccess(response, file, fileList) {
+      const imgUrlRes = fileList.map((item) => {
+        return (item = `http://121.40.125.179${item.response.result.msg}`);
+      });
+      this.imgUrlList = imgUrlRes;
       // const uid = file.uid
       // const objKeyArr = Object.keys(this.listObj)
       // for (let i = 0, len = objKeyArr.length; i < len; i++) {
@@ -85,31 +83,46 @@ export default {
       // console.log(this.listObj);
     },
     handleRemove(file) {
-      const uid = file.uid
-      const objKeyArr = Object.keys(this.listObj)
-      for (let i = 0, len = objKeyArr.length; i < len; i++) {
-        if (this.listObj[objKeyArr[i]].uid === uid) {
-          delete this.listObj[objKeyArr[i]]
-          return
-        }
-      }
+      // const uid = file.uid
+      // const objKeyArr = Object.keys(this.listObj)
+      // for (let i = 0, len = objKeyArr.length; i < len; i++) {
+      //   if (this.listObj[objKeyArr[i]].uid === uid) {
+      //     delete this.listObj[objKeyArr[i]]
+      //     return
+      //   }
+      // }
     },
     beforeUpload(file) {
-      const _self = this
-      const _URL = window.URL || window.webkitURL
-      const fileName = file.uid
-      this.listObj[fileName] = {}
-      return new Promise((resolve, reject) => {
-        const img = new Image()
-        img.src = _URL.createObjectURL(file)
-        img.onload = function() {
-          _self.listObj[fileName] = { hasSuccess: false, uid: file.uid, width: this.width, height: this.height }
-        }
-        resolve(true)
-      })
-    }
-  }
-}
+      // const _self = this
+      // const _URL = window.URL || window.webkitURL
+      // const fileName = file.uid
+      // this.listObj[fileName] = {}
+      // return new Promise((resolve, reject) => {
+      //   const img = new Image()
+      //   img.src = _URL.createObjectURL(file)
+      //   img.onload = function() {
+      //     _self.listObj[fileName] = { hasSuccess: false, uid: file.uid, width: this.width, height: this.height }
+      //   }
+      //   resolve(true)
+      // })
+      let types = ["image/jpeg", "image/gif", "image/bmp", "image/png"];
+      // 判断图片类型 includes判断是否是数组中的某个元素
+      const isImage = types.includes(file.type);
+      // 图片大小
+      const isLtSize = file.size / 1024 / 1024 < 5;
+
+      if (!isImage) {
+        this.$message.error("上传图片只能是 JPG、GIF、BMP、PNG 格式!");
+        return false;
+      }
+      if (!isLtSize) {
+        this.$message.error("上传图片大小不能超过 5MB!");
+        return false;
+      }
+      return true;
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
