@@ -1,0 +1,16 @@
+{
+  "id": "2689879",
+  "name": "person-blog",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "381583",
+      "name": "back-top",
+      "font_class": "backtop",
+      "unicode": "e606",
+      "unicode_decimal": 58886
+    }
+  ]
+}
