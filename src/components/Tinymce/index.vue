@@ -2,7 +2,7 @@
   <div :class="{fullscreen:fullscreen}" class="tinymce-container" :style="{width:containerWidth}">
     <textarea :id="tinymceId" class="tinymce-textarea" />
     <div class="editor-custom-btn-container">
-      <editorImage color="#1890ff" class="editor-upload-btn" @successCBK="imageSuccessCBK" />
+      <editorImage color="#1890ff" class="editor-upload-btn" @successCBK="imageSuccessCBK" @upLoadImgForm="getFormData" />
     </div>
   </div>
 </template>
@@ -62,7 +62,8 @@ export default {
         'zh': 'zh_CN',
         'es': 'es_MX',
         'ja': 'ja'
-      }
+      },
+      formDataArr:[]
     }
   },
   computed: {
@@ -165,6 +166,10 @@ export default {
     },
     imageSuccessCBK(arr) {
       arr.forEach(item => window.tinymce.get(this.tinymceId).insertContent(`<img class="wscnph" src="${item}" >`))
+    },
+    getFormData(res) {
+      console.log(res);
+      this.$emit("upLoadFormData",res)
     }
   }
 }

@@ -10,6 +10,9 @@ import './assets/fonts/iconfont.css'
 
 Vue.config.productionTip = false
 
+// import axios from 'axios'
+// axios.defaults.baseURL = '/api'
+
 Vue.use(ElementUI);
 
 router.beforeEach((to,from,next) => {

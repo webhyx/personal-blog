@@ -59,6 +59,13 @@ export default {
       //   this.$message('Please wait for all images to be uploaded successfully. If there is a network problem, please refresh the page and upload again!')
       //   return
       // }
+             var formData = new window.FormData()
+                    var files= document.querySelector('input[type=file]').files;
+                    for (let index = 0; index < files.length; index++) {
+                        formData.append('files',files[index])
+                    }
+      console.log(formData);
+      this.$emit("upLoadImgForm",formData)
       this.$emit("successCBK", this.imgUrlList);
       this.imgUrlList = [];
       // this.listObj = {}
