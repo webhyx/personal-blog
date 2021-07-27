@@ -8,12 +8,14 @@ import ElementUI from 'element-ui';
 
 import './assets/fonts/iconfont.css'
 
+import axios from 'axios' 
+import VueAxios from 'vue-axios'
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+
 Vue.config.productionTip = false
 
-// import axios from 'axios'
-// axios.defaults.baseURL = '/api'
+Vue.use(ElementUI, axios,VueAxios);
 
-Vue.use(ElementUI);
 
 router.beforeEach((to,from,next) => {
   store.commit('cookie/getToken')
