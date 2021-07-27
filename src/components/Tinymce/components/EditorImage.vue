@@ -11,6 +11,7 @@
     </el-button>
     <el-dialog :visible.sync="dialogVisible">
       <el-upload
+        ref="upload"
         :multiple="true"
         :file-list="fileList"
         :show-file-list="true"
@@ -20,6 +21,8 @@
         class="editor-slide-upload"
         :action="dataUpdate"
         list-type="picture-card"
+        :auto-upload="false"
+        :on-error="hanleFail"
       >
         <el-button size="small" type="primary"> Click upload </el-button>
       </el-upload>
@@ -43,13 +46,16 @@ export default {
   data() {
     return {
       dialogVisible: false,
-      dataUpdate: `http://121.40.125.179/Blob/ImgUpdate?token=${this.$store.state.cookie.token}`,
+      dataUpdate:`http://121.40.125.179/Blob/ImgUpdate?token=${this.$store.state.cookie.token}`,
       imgUrlList: [],
       listObj: {},
       fileList: [],
     };
   },
   methods: {
+    submitUpload() {
+        this.$refs.upload.submit();
+      },
     // checkAllSuccess() {
     //   return Object.keys(this.listObj).every(item => this.listObj[item].hasSuccess)
     // },
@@ -59,15 +65,31 @@ export default {
       //   this.$message('Please wait for all images to be uploaded successfully. If there is a network problem, please refresh the page and upload again!')
       //   return
       // }
+      //  let formData = new window.FormData()
+                   
+      //               let files= document.querySelector('input[type=file]').files;
+      //               for (let index = 0; index < files.length; index++) {
+      //                   formData.append('files',files[index])
+      //               }
+      console.log(this.fileList);
       this.$emit("successCBK", this.imgUrlList);
       this.imgUrlList = [];
       // this.listObj = {}
       this.fileList = [];
       this.dialogVisible = false;
     },
+    hanleFail(err, file, fileList) {
+      console.log('no');
+      console.log(err);
+      console.log(fileList);
+    },
     handleSuccess(response, file, fileList) {
+      console.log('yes');
+      console.log(response);
+      console.log(fileList);
       const imgUrlRes = fileList.map((item) => {
-        return (item = `http://121.40.125.179${item.response.result.msg}`);
+        item = `http://121.40.125.179${item.response.result.msg}`;
+        return item
       });
       this.imgUrlList = imgUrlRes;
       // const uid = file.uid

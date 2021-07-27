@@ -62,7 +62,8 @@ export default {
         'zh': 'zh_CN',
         'es': 'es_MX',
         'ja': 'ja'
-      }
+      },
+      imgArr:[]
     }
   },
   computed: {
@@ -165,7 +166,13 @@ export default {
     },
     imageSuccessCBK(arr) {
       arr.forEach(item => window.tinymce.get(this.tinymceId).insertContent(`<img class="wscnph" src="${item}" >`))
-    }
+    },
+    upLoadImgArr(item) {
+      this.imgArr.push(item)
+      
+      console.log('index');
+      console.log(this.imgArr);
+    },
   }
 }
 </script>

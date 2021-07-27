@@ -8,9 +8,14 @@ import ElementUI from 'element-ui';
 
 import './assets/fonts/iconfont.css'
 
+import axios from 'axios' 
+import VueAxios from 'vue-axios'
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+
 Vue.config.productionTip = false
 
-Vue.use(ElementUI);
+Vue.use(ElementUI, axios,VueAxios);
+
 
 router.beforeEach((to,from,next) => {
   store.commit('cookie/getToken')
