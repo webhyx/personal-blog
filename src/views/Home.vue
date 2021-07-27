@@ -44,10 +44,10 @@ export default {
       // arr.push(formData)
       // console.log(formData);
       axios({
-        method:"get",
+        method:"post",
         url:`http://121.40.125.179/Blob/DraftUpdate?token=${userToken}`,
         params:{
-          files:this.formDataArr,
+          files:[],
           title:'xxx',
           content:'<div>yes</div>'
         }
