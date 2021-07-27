@@ -19,6 +19,8 @@ export default {
 </script>
 <style lang="less" >
 #app {
+  width: 100%;
+  min-height: 3000px;
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -27,7 +29,6 @@ export default {
   background-color: #efefef;
   padding: 0;
   margin: 0;
-  min-height: 3000px;
   .el-backtop {
     border-radius: 0;
     background: transparent;

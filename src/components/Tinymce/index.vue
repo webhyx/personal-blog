@@ -167,19 +167,12 @@ export default {
     imageSuccessCBK(arr) {
       arr.forEach(item => window.tinymce.get(this.tinymceId).insertContent(`<img class="wscnph" src="${item}" >`))
     },
-<<<<<<< HEAD
-    getFormData(res) {
-      console.log(res);
-      this.$emit("upLoadFormData",res)
-    }
-=======
     upLoadImgArr(item) {
       this.imgArr.push(item)
       
       console.log('index');
       console.log(this.imgArr);
     },
->>>>>>> 54aec88b786ce03f06e32ecd650117acabfb539d
   }
 }
 </script>
