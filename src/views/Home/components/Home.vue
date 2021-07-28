@@ -1,19 +1,30 @@
 <template>
   <el-row :gutter="20">
     <el-col :span="6">
-      <div class="grid-content bg-purple left-content">
-        <div class="personal"></div>
+      <div class="grid-content  left-content">
+        <div class="personal">
+          <introduction></introduction>
+        </div>
         <div class="navigation"></div>
       </div>
     </el-col>
     <el-col :span="18">
-      <div class="grid-content bg-purple right-content"></div>
+      <div class="grid-content  right-content">
+        <article-item></article-item>
+      </div>
     </el-col>
   </el-row>
 </template>
 
 <script>
-export default {};
+import Introduction from './Introduction.vue'
+import ArticleItem from './Article.vue'
+export default {
+  components:{
+    Introduction,
+    ArticleItem
+  }
+};
 </script>
 
 <style lang="less" scoped>
@@ -47,10 +58,6 @@ export default {};
 .el-col {
   border-radius: 4px;
 }
-
-// .bg-purple {
-//   background: #d3dce6;
-// }
 
 .grid-content {
   border-radius: 4px;

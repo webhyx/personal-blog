@@ -36,6 +36,7 @@ export default {
     .icon-backtop {
         height: 100%;
         width: 100%;
+        color: #69c37b;
         font-size: 40px;
         text-align: center;
         line-height: 40px;
