@@ -52,9 +52,9 @@ export default {
 
 <style lang="less" scoped>
   .introduction {
-    width: 100%;
+    width: 100%;  
     height: 100%;
-    margin-top: 10px;
+    // margin-top: 10px;
     background-color: #fff;
     border: 1px #f0f0f0 solid;
      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);

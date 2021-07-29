@@ -6,7 +6,7 @@ Vue.use(VueRouter)
 const routes = [
   {
     path:'/',
-    redirect:'/Edit'
+    redirect:'/home'
   },
   {
     path: '/home',
@@ -22,6 +22,11 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: () => import(/* webpackChunkName: "about" */ '../views/Login.vue')
+  },
+  {
+    path:'/article',
+    name:'Article',
+    component: () => import('../views/Article')
   },
   {
     path:'/test',

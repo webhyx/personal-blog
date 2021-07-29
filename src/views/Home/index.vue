@@ -32,8 +32,8 @@
 
 <script>
 import ArticleItem from './components/Article.vue'
-import Introduction from './components/Navigation.vue'
-import HotTag from './components/HotTag.vue'
+import Introduction from '@/components/Navigation.vue'
+import HotTag from '@/components/HotTag.vue'
 export default {
   components: {
     Introduction,
@@ -71,11 +71,12 @@ export default {
     border-radius: 5px;
   }
   .left-content>:first-child {
-    margin-top: 10px;
+    margin-top: 0;
   }
 }
 .el-col {
   border-radius: 4px;
+  margin-top: 10px;
 }
 
 .grid-content {

@@ -5,9 +5,10 @@
       </div>
       <div class="tag-list">
           <el-tag effect="plain" type="success">vue</el-tag>
+          <el-tag effect="plain" type="success">css</el-tag>
           <el-tag effect="plain" type="success">JavaScript</el-tag>
           <el-tag effect="plain" type="success">Java</el-tag>
-          <el-tag effect="plain" type="success">redius</el-tag>
+          <el-tag effect="plain" type="success">redis</el-tag>
           <el-tag effect="plain" type="success">数据库</el-tag>
           <el-tag effect="plain" type="success">Git</el-tag>
           <el-tag effect="plain" type="success">前端</el-tag>
@@ -28,7 +29,6 @@ export default {
      .hot-tag {
     width: 100%;
     height: 100%;
-    margin-top: 10px;
     background-color: #fff;
     border: 1px #f0f0f0 solid;
      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);

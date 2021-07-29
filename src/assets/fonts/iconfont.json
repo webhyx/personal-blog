@@ -6,6 +6,27 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "22046255",
+      "name": "时 间",
+      "font_class": "shijian",
+      "unicode": "e6d9",
+      "unicode_decimal": 59097
+    },
+    {
+      "icon_id": "4218721",
+      "name": "浏览",
+      "font_class": "liulan-copy",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
+      "icon_id": "17851676",
+      "name": "作者",
+      "font_class": "zuozhe",
+      "unicode": "e750",
+      "unicode_decimal": 59216
+    },
+    {
       "icon_id": "23027729",
       "name": "首页",
       "font_class": "shouye",
