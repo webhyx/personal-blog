@@ -11,13 +11,14 @@
     <el-col :span="18">
       <div class="grid-content  right-content">
         <article-item></article-item>
+        <div>aaa</div>
       </div>
     </el-col>
   </el-row>
 </template>
 
 <script>
-import Introduction from './Introduction.vue'
+import Introduction from './Navigation.vue'
 import ArticleItem from './Article.vue'
 export default {
   components:{

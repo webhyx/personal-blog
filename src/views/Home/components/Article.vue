@@ -25,11 +25,12 @@ export default {};
 <style lang="less" scoped>
 .article {
   position: relative;
-  width: 94%;
+  width: 95%;
   height: 230px;
   margin: 10px auto;
   background-color: #fff;
   border: 1px #f0f0f0 solid;
+  border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
   .title {
     width: 90%;
@@ -40,7 +41,7 @@ export default {};
       text-decoration: none;
       color: rgb(71, 61, 61);
       font-size: 23px;
-      font-family: "PingFang-SC-Medium";
+      font-family: "微软雅黑";
       font-weight: bold;
     }
     a:hover {
