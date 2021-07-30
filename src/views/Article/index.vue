@@ -21,7 +21,7 @@
             </div>
           </div>
           <div class="article-content">
-              <div v-html="content" />
+            <div v-html="content" />
           </div>
         </div>
       </el-col>
@@ -41,11 +41,11 @@
 
 <script>
 import HotTag from "@/components/HotTag.vue";
-import HotRecommend from "@/components/HotRecommend.vue"
+import HotRecommend from "@/components/HotRecommend.vue";
 export default {
   components: {
     HotTag,
-    HotRecommend
+    HotRecommend,
   },
   props: {
     // content: {
@@ -85,77 +85,73 @@ export default {
       border: 1px #f0f0f0 solid;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
       .article-content {
-          margin: 10px;
+        margin: 10px;
       }
       .title-part {
-          .title {
-              width: 100%;
-              margin: 10px 0;
-              text-align: center;
-              font-size: 24px;
-              font-family: "微软雅黑";
-              font-weight: 500;
+        .title {
+          width: 100%;
+          margin: 10px 0;
+          text-align: center;
+          font-size: 24px;
+          font-family: "微软雅黑";
+          font-weight: 500;
+        }
+        .state {
+          display: flex;
+          .writer {
+            display: flex;
+            margin-left: 12px;
+            align-items: baseline;
+            cursor: default;
+            &:hover {
+              .icon {
+                color: #69c37b;
+              }
+              .name {
+                color: #69c37b;
+              }
+            }
+            .name {
+              margin-left: 6px;
+            }
           }
-          .state {
-              display: flex;
-              .writer {
-                  display: flex;
-                  margin-left: 12px;
-                  align-items: baseline;
-                  cursor: default;
-                  &:hover {
-                        .icon {
-                          color: #69c37b;
-                        }
-                        .name {
-                          color: #69c37b;
-                        }
-                      }
-                  .icon {
-                  }
-                  .name {
-                      margin-left: 6px;
-                      
-                  }
+          .dispub-time {
+            display: flex;
+            margin-left: 12px;
+            line-height: 23px;
+            cursor: default;
+            &:hover {
+              .icon {
+                color: #69c37b;
               }
-              .dispub-time {
-                  display: flex;
-                  margin-left: 12px;
-                  line-height: 23px;
-                  cursor: default;
-                  &:hover {
-                        .icon {
-                          color: #69c37b;
-                        }
-                        .time {
-                          color: #69c37b;
-                        }
-                      }
-                  
-                  .time {
-                      
-                      margin-left: 6px;
-                  }
+              .time {
+                color: #69c37b;
               }
-              .view {
-                  display: flex;
-                  margin-left: 12px;
-                  align-items: baseline;
-                  cursor: default;
-                  &:hover {
-                        .icon {
-                          color: #69c37b;
-                        }
-                        .times {
-                          color: #69c37b;
-                        }
-                      }
-                  
-                  .times {
-                      margin-left: 6px;
-                  }
-              }
+            }
+
+            .time {
+              margin-left: 6px;
+            }
           }
+          .view {
+            display: flex;
+            margin-left: 12px;
+            align-items: baseline;
+            cursor: default;
+            &:hover {
+              .icon {
+                color: #69c37b;
+              }
+              .times {
+                color: #69c37b;
+              }
+            }
+
+            .times {
+              margin-left: 6px;
+            }
+          }
+        }
       }
     }
     .right-content {
@@ -165,12 +161,12 @@ export default {
         background-color: #fff;
         border-radius: 5px;
       }
-        .hotRecommend {
-          width: 100%;
-          height: 500px;
-          margin-top: 20px;
-          background-color: #fff;
-        }
+      .hotRecommend {
+        width: 100%;
+        height: 500px;
+        margin-top: 20px;
+        background-color: #fff;
+      }
     }
   }
 
