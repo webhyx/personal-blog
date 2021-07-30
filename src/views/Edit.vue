@@ -1,16 +1,19 @@
 <template>
   <div class="home">
-    <el-button @click="dispublish">发布</el-button>
+    <div class="top">
+      <el-input placeholder="请输入标题" v-model="title" clearable></el-input>
+      <el-button type="success" plain>保存</el-button>
+      <el-button type="success" plain @click="dispublish">发布</el-button>
+    </div>
     <div class="Tinymce_box">
       <tinymce v-model="content" :height="500" />
-      <div v-if="content" class="editor-content">
+      <div class="editor-content">
         <h3>预览效果：</h3>
-        <!-- <div v-html="content" /> -->
-        <div>
-          {{content}}
-        </div>
+        <div  v-if="content" v-html="content" />
+        <!-- {{content}} -->
       </div>
     </div>
+    <!-- <el-button @click="upDist">上传dist</el-button> -->
   </div>
 </template>
 
@@ -29,11 +32,13 @@ export default {
   methods: {
     dispublish() {
       let data = new FormData();
-      data.append("files", document.querySelector("input[type=file]").files[0]);
+      if(document.querySelector("input[type=file]").files[0]){
+        data.append("files", document.querySelector("input[type=file]").files[0]);
+      }
       data.append("content", this.content);
       data.append("title", this.title);
       var options = {
-        url: `http://121.40.125.179/Blob/DraftUpdate?token=${this.$store.state.cookie.token}`,
+        url: `http://www.hhsunset.top/Blob/DraftUpdate?token=${this.$store.state.cookie.token}`,
         method: "post",
         headers: {
           "Content-Type": "multipart/form-data",
@@ -50,21 +55,54 @@ export default {
           console.log(error);
         });
     },
+    upDist() {
+      let data = new FormData();
+      data.append("token", this.$store.state.cookie.token);
+      data.append("file", document.querySelector("input[type=file]").files[0]);
+      var options = {
+        url: `http://121.40.125.179/NodeJsDeployment`,
+        method: "post",
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        data: data,
+      };
+      axios(options)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
 };
 </script>
-<style lang="scss"  scoped>
-.Tinymce_box {
+<style lang="less"  scoped>
+.home {
+  .top {
+    display: flex;
+    padding: 10px 10px 0;
+    .el-button {
+      margin-left: 10px;
+      // background: #69c37b;
+      // color: #fff;
+    }
+  }
+  .Tinymce_box {
   display: flex;
+  margin: 10px;
 }
 .editor-content {
   margin-left: 30px;
   flex: 1;
+  background-color: #fff;
   border: 2px dashed #eee;
   padding: 0 20px;
   h3 {
     color: #808080;
     text-align: center;
   }
+}
 }
 </style>

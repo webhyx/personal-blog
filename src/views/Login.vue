@@ -30,7 +30,8 @@ export default {
     login(account,password){
       axios({
         method: "get",
-        url: "http://121.40.125.179/token",
+        // url: "http://121.40.125.179/token",
+        url:"http://www.hhsunset.top/token",
         params: {
           name: account,
           password: password,
@@ -52,6 +53,7 @@ export default {
           this.$message('异常错误')
         }
       });
+     
     }
   }
 };

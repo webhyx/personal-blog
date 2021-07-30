@@ -34,11 +34,52 @@
 import ArticleItem from './components/Article.vue'
 import Introduction from '@/components/Navigation.vue'
 import HotTag from '@/components/HotTag.vue'
+
+import axios from "axios";
+
 export default {
   components: {
     Introduction,
     ArticleItem,
     HotTag
+  },
+  data(){
+    return {
+      content:'',
+      changeContent:''
+    }
+  },
+  mounted(){
+    this.gerUserArticle()
+  },
+  methods:{
+    gerUserArticle(){
+      this.$store.commit('cookie/getToken')
+      axios({
+        url:`http://121.40.125.179/Blob/DraftGet?token=${this.$store.state.cookie.token}`,
+        method:"get"
+      }).then(res => {
+        console.log(res);
+        this.content = res.data.result[4].content
+        console.log(this.content);
+        this.changeContent = this.trimHtml(this.content)
+    console.log(this.changeContent);
+      }).catch(err => {
+        console.log(err);
+      })
+    },
+    trimHtml(str){
+    str = str.replace(/(\n)/g, "");
+    str = str.replace(/(\t)/g, "");
+    str = str.replace(/(\r)/g, "");
+    str = str.replace(/\s*/g, "");
+    /* -----将<xxx>去掉，</xxx>改为一个空格 */
+    // [^>] 匹配除了>的所有
+    str = str.replace(/<[^/]*>/g,"");
+    // .*贪婪匹配：会尽可能匹配多的   .*?非贪婪匹配：只匹配一个
+    str = str.replace(/<\/.*?>/g," ")
+    return str;
+}
   }
 }
 </script>
