@@ -1,4 +1,4 @@
-# tiny
+# personal-blog
 
 ## Project setup
 ```
