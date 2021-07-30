@@ -40,7 +40,7 @@ export default {};
       text-decoration: none;
       color: rgb(71, 61, 61);
       font-size: 23px;
-      font-family: "PingFang-SC-Medium";
+      font-family: "微软雅黑";
       font-weight: bold;
     }
     a:hover {
