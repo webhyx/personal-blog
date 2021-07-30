@@ -30,7 +30,9 @@
           <div class="hotTag">
             <hot-tag></hot-tag>
           </div>
-          <div class="navigation"></div>
+          <div class="hotRecommend">
+            <hot-recommend></hot-recommend>
+          </div>
         </div>
       </el-col>
     </el-row>
@@ -39,9 +41,11 @@
 
 <script>
 import HotTag from "@/components/HotTag.vue";
+import HotRecommend from "@/components/HotRecommend.vue"
 export default {
   components: {
     HotTag,
+    HotRecommend
   },
   props: {
     // content: {
@@ -96,56 +100,77 @@ export default {
               display: flex;
               .writer {
                   display: flex;
-                  margin-left: 10px;
+                  margin-left: 12px;
                   align-items: baseline;
+                  cursor: default;
+                  &:hover {
+                        .icon {
+                          color: #69c37b;
+                        }
+                        .name {
+                          color: #69c37b;
+                        }
+                      }
                   .icon {
-
-                      color: #69c37b;
                   }
                   .name {
-                      margin-left: 4px;
+                      margin-left: 6px;
+                      
                   }
               }
               .dispub-time {
                   display: flex;
-                  margin-left: 10px;
+                  margin-left: 12px;
                   line-height: 23px;
-                  .icon {
-
-                      color: #69c37b;
-                  }
+                  cursor: default;
+                  &:hover {
+                        .icon {
+                          color: #69c37b;
+                        }
+                        .time {
+                          color: #69c37b;
+                        }
+                      }
+                  
                   .time {
                       
-                      margin-left: 4px;
+                      margin-left: 6px;
                   }
               }
               .view {
                   display: flex;
-                  margin-left: 10px;
+                  margin-left: 12px;
                   align-items: baseline;
-                  .icon {
-                      color: #69c37b;
-                  }
+                  cursor: default;
+                  &:hover {
+                        .icon {
+                          color: #69c37b;
+                        }
+                        .times {
+                          color: #69c37b;
+                        }
+                      }
+                  
                   .times {
-                      margin-left: 4px;
+                      margin-left: 6px;
                   }
               }
           }
       }
     }
     .right-content {
-      .navigation {
-        width: 100%;
-        height: 500px;
-        margin-top: 20px;
-        background-color: #fff;
-      }
       .hotTag {
         width: 100%;
-        height: 225px;
+        // height: 225px;
         background-color: #fff;
         border-radius: 5px;
       }
+        .hotRecommend {
+          width: 100%;
+          height: 500px;
+          margin-top: 20px;
+          background-color: #fff;
+        }
     }
   }
 

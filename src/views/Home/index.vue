@@ -59,7 +59,6 @@ export default {
     }
     .hotTag {
       width: 100%;
-      height: 300px;
       margin-top: 30px;
       background-color: #fff;
       border-radius: 5px;

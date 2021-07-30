@@ -32,6 +32,10 @@ export default {};
   border: 1px #f0f0f0 solid;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
+  &:hover {
+    transform: scale(1.01); // 放大1.01倍
+		transition: all .3s; // 设置加载时间
+  }
   .title {
     width: 90%;
     padding: 6px 0 10px 0;
@@ -59,6 +63,11 @@ export default {};
       line-height: 24px;
       margin-left: 8px;
       color: #69c37b;
+      cursor: pointer;
+            &:hover {
+                background-color: #69c37b;
+                color: #fff;
+            }
     }
     .el-tag:first-child {
       margin-left: 0;

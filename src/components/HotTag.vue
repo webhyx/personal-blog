@@ -48,6 +48,10 @@ export default {
         .el-tag {
             cursor: pointer;
             margin: 4px;
+            &:hover {
+                background-color: #69c37b;
+                color: #fff;
+            }
         }
     }
      }
