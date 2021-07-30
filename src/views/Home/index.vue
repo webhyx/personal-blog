@@ -1,33 +1,85 @@
 <template>
   <div class="home-main">
       <el-row :gutter="20">
-    <el-col :span="6">
+    <el-col :span="18">
       <div class="grid-content  left-content">
-        <div class="personal">
-          <introduction></introduction>
-        </div>
-        <div class="navigation"></div>
+        <article-item></article-item>
+        <article-item></article-item>
+        <article-item></article-item>
+        <article-item></article-item>
       </div>
     </el-col>
-    <el-col :span="18">
+        <el-col :span="6">
       <div class="grid-content  right-content">
-        <article-item></article-item>
-        <article-item></article-item>
-        <article-item></article-item>
-        <article-item></article-item>
+        <div class="navigation">
+          <introduction></introduction>
+        </div>
+        <div class="hotTag">
+          <hot-tag></hot-tag>
+        </div>
       </div>
     </el-col>
   </el-row>
+  <div class="pagination">
+      <el-pagination
+  background
+  layout="prev, pager, next"
+  :total="100">
+</el-pagination>
+  </div>
   </div>
 </template>
 
 <script>
-import Introduction from './components/Introduction.vue'
 import ArticleItem from './components/Article.vue'
+import Introduction from '@/components/Navigation.vue'
+import HotTag from '@/components/HotTag.vue'
+
+import axios from "axios";
+
 export default {
   components: {
     Introduction,
-    ArticleItem
+    ArticleItem,
+    HotTag
+  },
+  data(){
+    return {
+      content:'',
+      changeContent:''
+    }
+  },
+  mounted(){
+    this.gerUserArticle()
+  },
+  methods:{
+    gerUserArticle(){
+      this.$store.commit('cookie/getToken')
+      axios({
+        url:`http://121.40.125.179/Blob/DraftGet?token=${this.$store.state.cookie.token}`,
+        method:"get"
+      }).then(res => {
+        console.log(res);
+        this.content = res.data.result[4].content
+        console.log(this.content);
+        this.changeContent = this.trimHtml(this.content)
+    console.log(this.changeContent);
+      }).catch(err => {
+        console.log(err);
+      })
+    },
+    trimHtml(str){
+    str = str.replace(/(\n)/g, "");
+    str = str.replace(/(\t)/g, "");
+    str = str.replace(/(\r)/g, "");
+    str = str.replace(/\s*/g, "");
+    /* -----将<xxx>去掉，</xxx>改为一个空格 */
+    // [^>] 匹配除了>的所有
+    str = str.replace(/<[^/]*>/g,"");
+    // .*贪婪匹配：会尽可能匹配多的   .*?非贪婪匹配：只匹配一个
+    str = str.replace(/<\/.*?>/g," ")
+    return str;
+}
   }
 }
 </script>
@@ -41,37 +93,45 @@ export default {
   &:last-child {
     margin-bottom: 0;
   }
-  .left-content {
-    .personal {
-      width: 100%;
-      height: 500px;
-      background-color: #fff;
-      border-radius: 5px;
-    }
+  .right-content {
     .navigation {
       width: 100%;
-      height: 1000px;
+      height: 500px;
+    }
+    .hotTag {
+      width: 100%;
       margin-top: 30px;
       background-color: #fff;
       border-radius: 5px;
     }
   }
-  .right-content {
+  .left-content {
     width: 100%;
-    min-height: 2000px;
+    // min-height: 2000px;
     border-radius: 5px;
   }
-  .right-content>:first-child {
-    margin-top: 10px;
+  .left-content>:first-child {
+    margin-top: 0;
   }
 }
 .el-col {
   border-radius: 4px;
+  margin-top: 10px;
 }
 
 .grid-content {
   border-radius: 4px;
   min-height: 36px;
+}
+ .pagination {
+   display: flex;
+   justify-content: center;
+   margin-top: 35px;
+   .el-pagination {
+     /deep/.active {
+       background-color: #69c37b !important;
+     }
+}
 }
   }
 </style>

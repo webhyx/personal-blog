@@ -1,0 +1,92 @@
+创建接口
+http://121.40.125.179/Blob/DraftUpdate?token=2ec17fab-6d93-484d-9d0c-56fb2bcefd7f
+参数
+参数:
+files	文件数组	上传的图片
+title	字符串	标题
+content	字符串	内容
+返回
+{
+	"result": {
+		"msg": "保存成功"
+	},
+	"code": 200
+}
+
+获取接口
+http://121.40.125.179/Blob/DraftGet?token=2ec17fab-6d93-484d-9d0c-56fb2bcefd7f
+参数:无需利用token获取用户即可
+返回
+{
+	"result": [
+		{
+			"blobid": 1,
+			"userid": 3,
+			"title": "test1",
+			"content": "test1",
+			"paths": []
+		},
+		{
+			"blobid": 2,
+			"userid": 3,
+			"title": "test1",
+			"content": "test1",
+			"paths": []
+		},
+		{
+			"blobid": 3,
+			"userid": 3,
+			"title": "test1",
+			"content": "test1",
+			"paths": []
+		},
+		{
+			"blobid": 4,
+			"userid": 3,
+			"title": "test1",
+			"content": "test1",
+			"paths": []
+		},
+		{
+			"blobid": 6,
+			"userid": 3,
+			"title": "test6",
+			"content": "test6",
+			"paths": [
+				"/static/Blob/Draft/Img/4f6711c2-6712-404e-8119-fb5f14217c1e.gif"
+			]
+		}
+	],
+	"code": 200
+}
+
+
+
+
+
+修改接口:
+http://121.40.125.179/Blob/DraftChange?token=2ec17fab-6d93-484d-9d0c-56fb2bcefd7f
+参数:
+files	文件数组	上传的图片
+title	字符串	标题
+content	字符串	内容
+blobid	数字	博客id
+返回:
+{
+	"result": {
+		"msg": "保存成功"
+	},
+	"code": 200
+}
+
+删除接口
+http://121.40.125.179/Blob/DraftDelete?token=2ec17fab-6d93-484d-9d0c-56fb2bcefd7f
+参数:
+blobid	数字	博客id
+返回
+{
+	"result": {
+		"msg": "删除成功"
+	},
+	"code": 200
+}
