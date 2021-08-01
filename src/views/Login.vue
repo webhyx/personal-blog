@@ -22,7 +22,7 @@ export default {
   components: {  },
   data() {
     return {
-      account:'huangyuxuan',
+      account:'740006840@qq.com',
       password:'huangyuxuan'
     };
   },
@@ -33,7 +33,7 @@ export default {
         // url: "http://121.40.125.179/token",
         url:"http://www.hhsunset.top/token",
         params: {
-          name: account,
+          email: account,
           password: password,
         },
       }).then((res) => {

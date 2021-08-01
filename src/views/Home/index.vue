@@ -1,12 +1,10 @@
 <template>
   <div class="home-main">
+      <login-head></login-head>
       <el-row :gutter="20">
     <el-col :span="18">
       <div class="grid-content  left-content">
-        <article-item></article-item>
-        <article-item></article-item>
-        <article-item></article-item>
-        <article-item></article-item>
+        <article-item v-for="(item,index) in content" :key="index" :articleItem="item"></article-item>
       </div>
     </el-col>
         <el-col :span="6">
@@ -31,6 +29,7 @@
 </template>
 
 <script>
+import LoginHead from '@/components/Head.vue'
 import ArticleItem from './components/Article.vue'
 import Introduction from '@/components/Navigation.vue'
 import HotTag from '@/components/HotTag.vue'
@@ -39,14 +38,14 @@ import axios from "axios";
 
 export default {
   components: {
+    LoginHead,
     Introduction,
     ArticleItem,
     HotTag
   },
   data(){
     return {
-      content:'',
-      changeContent:''
+      content:[],
     }
   },
   mounted(){
@@ -57,13 +56,22 @@ export default {
       this.$store.commit('cookie/getToken')
       axios({
         url:`http://121.40.125.179/Blob/DraftGet?token=${this.$store.state.cookie.token}`,
-        method:"get"
+        // url:'http://121.40.125.179/Blob/getPartPopularBlobDesc',
+        method:"get",
+        // params:{
+        //   size:6,
+        //   start:0
+        // }
       }).then(res => {
+        console.log('aaa');
         console.log(res);
-        this.content = res.data.result[4].content
+        let articleArr = res.data.result
+        this.content = articleArr.map( item => {
+          let brief = this.trimHtml(item.content)
+          item.brief = brief
+          return item
+        })
         console.log(this.content);
-        this.changeContent = this.trimHtml(this.content)
-    console.log(this.changeContent);
       }).catch(err => {
         console.log(err);
       })
@@ -73,6 +81,7 @@ export default {
     str = str.replace(/(\t)/g, "");
     str = str.replace(/(\r)/g, "");
     str = str.replace(/\s*/g, "");
+    str = str.replace(/&nbsp/g,"")
     /* -----将<xxx>去掉，</xxx>改为一个空格 */
     // [^>] 匹配除了>的所有
     str = str.replace(/<[^/]*>/g,"");
@@ -88,6 +97,7 @@ export default {
   .home-main {
     width: 90%;
     margin: 0 auto;
+    position: relative;
     .el-row {
   margin-bottom: 20px;
   &:last-child {
