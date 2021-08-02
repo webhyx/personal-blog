@@ -1,6 +1,6 @@
 <template>
   <div class="article">
-    <div class="title"><a href="">个人博客：personal-blog</a></div>
+    <div class="title"><a href="">{{articleItem.title}}</a></div>
     <div class="classify">
       <span class="text">分类：</span>
       <el-tag>项目</el-tag>
@@ -8,11 +8,11 @@
       <el-tag>JavaScript</el-tag>
     </div>
     <div class="indtroduce">
-      个人博客前端部分技术栈有HTML，CSS，JavaScript，Vue个人博客前端部分技术栈有HTML，CSS，JavaScript，Vue个人博客前端部分技术栈有HTML，CSS，JavaScript，Vue个人博客前端部分技术栈有HTML，CSS，JavaScript，Vue个人博客前端部分技术栈有HTML，CSS，JavaScript，Vue个人博客前端部分技术栈有HTML，CSS，JavaScript，Vue个人博客前端部分技术栈有HTML，CSS，JavaScript，Vue
+      {{articleItem.brief}}
     </div>
     <div class="message">
       <div class="upTime">时间：2021-7-27</div>
-      <div class="visit">访问量：999</div>
+      <div class="visit">访问量：{{articleItem.visited}}</div>
       <div class="comment"><div>评论</div></div>
       <div class="readAll" @click="toArticle"><div>阅读全文</div></div>
     </div>
@@ -21,6 +21,14 @@
 
 <script>
 export default {
+  props:{
+    articleItem:{
+      type:Object,
+      default(){
+        return {}
+      }
+    }
+  },
   methods: {
     toArticle() {
       this.$router.push("article");
