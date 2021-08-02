@@ -46,7 +46,7 @@ export default {
           // 设一个token，过期时间为会话结束
           this.$store.commit('cookie/setToken',res.data.result.token)
           console.log(res.data.result.token);
-          this.$router.push("/home");
+          this.$router.push("/personalHome");
         } else if(res.data.code === 400){
           this.$message('账号或密码错误！')
         } else {

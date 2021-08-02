@@ -37,9 +37,9 @@ export default {
 
 <style lang="less" scoped>
   .head {
-     position: absolute;
-      right: -60px;
-      top: 13px;
+    //  position: absolute;
+    //   right: -60px;
+    //   top: 13px;
     // .pic {
     //   width: 35px;
     //   height: 35px;

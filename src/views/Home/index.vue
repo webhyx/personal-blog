@@ -4,7 +4,7 @@
       <el-row :gutter="20">
     <el-col :span="18">
       <div class="grid-content  left-content">
-        <article-item v-for="(item,index) in content" :key="index" :articleItem="item"></article-item>
+        <article-item v-for="(item,index) in content" :key="index" :articleItem="item" :showComment="true" :showReadAll="true"></article-item>
       </div>
     </el-col>
         <el-col :span="6">
@@ -42,7 +42,7 @@ export default {
   },
   data() {
     return {
-      content:[],
+      content:[{},{},{},{},{},{}],
     }
   },
   mounted() {
@@ -62,26 +62,16 @@ export default {
       }).then(res => {
         console.log('aaa');
         console.log(res);
-        let articleArr = res.data.result
-        this.content = articleArr.map( item => {
-          let brief = this.trimHtml(item.content)
-          item.brief = brief
-          return item
-        })
+        // let articleArr = res.data.result
+        // this.content = articleArr.map( item => {
+        //   let brief = this.trimHtml(item.content)
+        //   item.brief = brief
+        //   return item
+        // })
         console.log(this.content);
       }).catch(err => {
         console.log(err);
       })
-        .then((res) => {
-          console.log(res);
-          this.content = res.data.result[4].content;
-          console.log(this.content);
-          this.changeContent = this.trimHtml(this.content);
-          console.log(this.changeContent);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
     },
     trimHtml(str){
     str = str.replace(/(\n)/g, "");
@@ -105,6 +95,11 @@ export default {
     width: 90%;
     margin: 0 auto;
     position: relative;
+    .head {
+       position: absolute;
+      right: -60px;
+      top: 13px;
+    }
     .el-row {
   margin-bottom: 20px;
   &:last-child {
@@ -136,6 +131,7 @@ export default {
     border-radius: 4px;
     min-height: 36px;
   }
+}
   .pagination {
     display: flex;
     justify-content: center;
@@ -146,6 +142,5 @@ export default {
       }
     }
   }
-}
   }
 </style>

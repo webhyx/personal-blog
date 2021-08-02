@@ -1,6 +1,8 @@
 <template>
   <div class="article">
-    <div class="title"><a href="">{{articleItem.title}}</a></div>
+    <div class="title">
+      <a href="">{{ articleItem.title }}</a>
+    </div>
     <div class="classify">
       <span class="text">分类：</span>
       <el-tag>项目</el-tag>
@@ -8,30 +10,115 @@
       <el-tag>JavaScript</el-tag>
     </div>
     <div class="indtroduce">
-      {{articleItem.brief}}
+      {{ articleItem.brief }}
     </div>
     <div class="message">
       <div class="upTime">时间：2021-7-27</div>
-      <div class="visit">访问量：{{articleItem.visited}}</div>
-      <div class="comment"><div>评论</div></div>
-      <div class="readAll" @click="toArticle"><div>阅读全文</div></div>
+      <div class="visit">访问量：{{ articleItem.visited }}</div>
+      <div class="delete" v-if="showDelete" @click="confirmDelete">
+        <div>删除</div>
+      </div>
+      <div class="edit" v-if="showEdit"><div>编辑</div></div>
+      <div class="comment" v-if="showComment"><div>评论</div></div>
+      <div class="readAll" v-if="showReadAll" @click="toArticle">
+        <div>阅读全文</div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import axios from "axios";
 export default {
-  props:{
-    articleItem:{
-      type:Object,
-      default(){
-        return {}
-      }
-    }
+  props: {
+    articleItem: {
+      type: Object,
+      default() {
+        return {};
+      },
+    },
+    blogID: {
+      type: Number,
+      default() {
+        return 0;
+      },
+    },
+    showDelete: {
+      type: Boolean,
+      dafault: false,
+    },
+    showEdit: {
+      type: Boolean,
+      dafault: false,
+    },
+    showComment: {
+      type: Boolean,
+      dafault: false,
+    },
+    showReadAll: {
+      type: Boolean,
+      dafault() {
+        return false;
+      },
+    },
+  },
+  // watch:{
+  //   showEdit(val,oldVal) {
+  //     console.log(val,oldVal);
+  //     this.showComment = false,
+  //     this.showReadAll = false
+  //   }
+  // },
+  data() {
+    return {};
+  },
+  mounted() {
+    console.log(this.blogID);
   },
   methods: {
     toArticle() {
       this.$router.push("article");
+    },
+    confirmDelete() {
+      this.$confirm("此操作将永久删除该文章, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
+        .then(() => {
+          console.log("delete");
+          this.$store.commit("cookie/getToken");
+          axios({
+            url: "http://www.hhsunset.top/Blob/DraftDelete",
+            method: "get",
+            params: {
+              blobid: this.blogID,
+              token: this.$store.state.cookie.token,
+            },
+          })
+            .then((res) => {
+              console.log(res);
+              if (res.data.code == 200) {
+                this.$message({
+                  type: "success",
+                  message: "删除成功!",
+                });
+              } else {
+                this.$message.error("删除失败!");
+              }
+              // 刷新页面 重新渲染文章列表
+              this.$router.go(0); 
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除",
+          });
+        });
     },
   },
 };
@@ -124,6 +211,50 @@ export default {
       line-height: 50px;
       font-size: 14px;
       color: #999999;
+    }
+    .delete {
+      position: absolute; /* 相对于父元素的position:absolute定位了 */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 70px;
+      right: 76px;
+      bottom: 1px;
+      height: 100%;
+      border-radius: 2px;
+      background-color: rgb(252, 0, 0);
+      cursor: pointer;
+      transition: all 0.2s linear;
+      div {
+        color: #fff;
+        font-size: 14px;
+      }
+    }
+    .delete:hover {
+      transition: all 0.2s linear;
+      background-color: rgb(139, 3, 3);
+    }
+    .edit {
+      position: absolute; /* 相对于父元素的position:absolute定位了 */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 70px;
+      right: 2px;
+      bottom: 1px;
+      height: 100%;
+      border-radius: 2px;
+      background-color: #699fc3;
+      cursor: pointer;
+      transition: all 0.2s linear;
+      div {
+        color: #fff;
+        font-size: 14px;
+      }
+    }
+    .edit:hover {
+      transition: all 0.2s linear;
+      background-color: rgb(44, 41, 230);
     }
     .readAll {
       position: absolute; /* 相对于父元素的position:absolute定位了 */

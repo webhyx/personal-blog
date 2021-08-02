@@ -2,8 +2,8 @@
   <div class="home">
     <div class="top">
       <el-input placeholder="请输入标题" v-model="title" clearable></el-input>
-      <el-button type="success" plain>保存</el-button>
-      <el-button type="success" plain @click="dispublish">发布</el-button>
+      <el-button type="success" plain @click="save">保存</el-button>
+      <el-button type="success" plain @click="publish">发布</el-button>
     </div>
     <div class="Tinymce_box">
       <tinymce v-model="content" :height="500" />
@@ -26,15 +26,15 @@ export default {
   data() {
     return {
       content: "",
-      title: "文章标题",
+      title: "",
     };
   },
   methods: {
-    dispublish() {
+    save() {
       let data = new FormData();
-      if(document.querySelector("input[type=file]").files[0]){
-        data.append("files", document.querySelector("input[type=file]").files[0]);
-      }
+      // if(document.querySelector("input[type=file]").files[0]){
+      //   data.append("files", document.querySelector("input[type=file]").files[0]);
+      // }
       data.append("content", this.content);
       data.append("title", this.title);
       var options = {
@@ -50,10 +50,20 @@ export default {
       axios(options)
         .then((res) => {
           console.log(res);
+          if(res.data.code == 200) {
+            this.$message({
+                  type: "success",
+                  message: "保存成功!",
+                });
+          }
+          // this.$router.push('personalHome')
         })
         .catch((error) => {
           console.log(error);
         });
+    },
+    publish(){
+      this.$router.push('personalHome')
     },
     upDist() {
       let data = new FormData();
