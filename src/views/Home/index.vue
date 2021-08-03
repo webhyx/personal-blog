@@ -46,6 +46,7 @@ export default {
     }
   },
   mounted() {
+    localStorage.removeItem("userMsg");
     this.gerUserArticle(6,0);
   },
   methods: {

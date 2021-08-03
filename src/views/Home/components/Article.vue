@@ -68,6 +68,7 @@ export default {
   },
   mounted() {
     //博客id传到vuex中
+    // console.log(this.blogID);
     this.$store.commit('article/setArticleID',this.blogID)
   },
   methods: {
