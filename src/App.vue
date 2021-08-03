@@ -3,19 +3,32 @@
     <el-backtop>
       <div class="iconfont icon-backtop"></div>
     </el-backtop>
-    <router-view/>
+    <router-view />
     <copy-right></copy-right>
   </div>
 </template>
 
 <script>
-import CopyRight from './components/CopyRight.vue'
+import CopyRight from "./components/CopyRight.vue";
 export default {
-  components:{
-    CopyRight
-
-  }
-}
+  components: {
+    CopyRight,
+  },
+  created() {
+    //在页面加载时读取localStorage里的状态信息  (vuex)
+    localStorage.getItem("userMsg") &&
+      this.$store.replaceState(
+        Object.assign(
+          this.$store.state,
+          JSON.parse(localStorage.getItem("userMsg"))
+        )
+      );
+    //在页面刷新时将vuex里的信息保存到localStorage里
+    window.addEventListener("beforeunload", () => {
+      localStorage.setItem("userMsg", JSON.stringify(this.$store.state));
+    });
+  },
+};
 </script>
 <style lang="less" >
 #app {
@@ -34,15 +47,13 @@ export default {
     background: transparent;
     box-shadow: none;
     .icon-backtop {
-        height: 100%;
-        width: 100%;
-        color: #69c37b;
-        font-size: 40px;
-        text-align: center;
-        line-height: 40px;
-       
+      height: 100%;
+      width: 100%;
+      color: #69c37b;
+      font-size: 40px;
+      text-align: center;
+      line-height: 40px;
     }
   }
 }
-
 </style>

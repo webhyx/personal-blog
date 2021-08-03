@@ -37,6 +37,7 @@ export default {
         return {};
       },
     },
+    // 博客ID
     blogID: {
       type: Number,
       default() {
@@ -62,19 +63,13 @@ export default {
       },
     },
   },
-  // watch:{
-  //   showEdit(val,oldVal) {
-  //     console.log(val,oldVal);
-  //     this.showComment = false,
-  //     this.showReadAll = false
-  //   }
-  // },
   data() {
     return {};
   },
   mounted() {
-    console.log(this.blogID);
-    this.$store.state.article.articleID = this.blogID
+    //博客id传到vuex中
+    // this.$store.state.article.articleID = this.blogID;
+    this.$store.commit('article/setArticleID',this.blogID)
   },
   methods: {
     toArticle() {
@@ -108,7 +103,7 @@ export default {
                 this.$message.error("删除失败!");
               }
               // 刷新页面 重新渲染文章列表
-              this.$router.go(0); 
+              this.$router.go(0);
             })
             .catch((err) => {
               console.log(err);

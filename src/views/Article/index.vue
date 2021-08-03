@@ -57,20 +57,23 @@ export default {
     // },
   },
   mounted(){
-    const blogID = this.$store.state.article.articleID
-    console.log(blogID);
+    this.blogID = this.$store.state.article.articleID
+    console.log(this.blogID);
     axios({
             url: "http://www.hhsunset.top/Blob/GetBlobByBlobId",
             method: "get",
             params: {
-              blobid:blogID,
+              blobid:this.blogID,
             },
           }).then((res) => {
             console.log(res);
+            this.title = res.data.result.title
+            this.content = res.data.result.content
           })
   },
   data() {
     return {
+      blogID:0,
       title: "标题",
       content: "<h3> Article NOT Found </h3>",
     };

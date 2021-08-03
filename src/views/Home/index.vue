@@ -49,10 +49,11 @@ export default {
     this.gerUserArticle(6,0);
   },
   methods: {
+    // 获取部分博客
     gerUserArticle(size,start) {
       this.$store.commit("cookie/getToken");
       axios({
-        url:'http://121.40.125.179/Blob/getPartPopularBlobDesc',
+        url:'http://www.hhsunset.top/Blob/getPartPopularBlobDesc',
         method:"get",
         params:{
           size:size,
@@ -72,6 +73,7 @@ export default {
         console.log(err);
       })
     },
+    // 去html格式
     trimHtml(str){
     str = str.replace(/(\n)/g, "");
     str = str.replace(/(\t)/g, "");
@@ -85,6 +87,7 @@ export default {
     str = str.replace(/<\/.*?>/g," ")
     return str;
 },
+// 换页
 handleCurrentChange(val) {
   console.log(`当前第${val}页`);
   let realVal = (val-1)*6

@@ -36,7 +36,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-  .head {
+  // .head {
     //  position: absolute;
     //   right: -60px;
     //   top: 13px;
@@ -46,5 +46,5 @@ export default {
     //   border-radius: 50%;
     //   background-color: #69c37b;
     // }
-  }
+  // }
 </style>
