@@ -40,6 +40,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 import HotTag from "@/components/HotTag.vue";
 import HotRecommend from "@/components/HotRecommend.vue";
 export default {
@@ -54,6 +55,19 @@ export default {
     //     return "<h2> Article NOT Found </h2>";
     //   },
     // },
+  },
+  mounted(){
+    const blogID = this.$store.state.article.articleID
+    console.log(blogID);
+    axios({
+            url: "http://www.hhsunset.top/Blob/GetBlobByBlobId",
+            method: "get",
+            params: {
+              blobid:blogID,
+            },
+          }).then((res) => {
+            console.log(res);
+          })
   },
   data() {
     return {

@@ -73,7 +73,8 @@ export default {
     return {};
   },
   mounted() {
-    // console.log(this.blogID);
+    console.log(this.blogID);
+    this.$store.state.article.articleID = this.blogID
   },
   methods: {
     toArticle() {

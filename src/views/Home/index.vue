@@ -4,7 +4,7 @@
       <el-row :gutter="20">
     <el-col :span="18">
       <div class="grid-content  left-content">
-        <article-item v-for="(item,index) in content" :key="index" :articleItem="item" :showComment="true" :showReadAll="true"></article-item>
+        <article-item v-for="(item,index) in content" :key="index" :articleItem="item" :showComment="true" :showReadAll="true" :blogID="item.blobid"></article-item>
       </div>
     </el-col>
         <el-col :span="6">
@@ -59,6 +59,7 @@ export default {
           start:start
         }
       }).then(res => {
+        console.log('getPartPopularBlobDesc');
         console.log(res);
         let articleArr = res.data.result
         this.content = articleArr.map( item => {
