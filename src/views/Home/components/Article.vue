@@ -18,7 +18,7 @@
       <div class="delete" v-if="showDelete" @click="confirmDelete">
         <div>删除</div>
       </div>
-      <div class="edit" v-if="showEdit"><div>编辑</div></div>
+      <div class="edit" v-if="showEdit" @click="editArticle"><div>编辑</div></div>
       <div class="comment" v-if="showComment"><div>评论</div></div>
       <div class="readAll" v-if="showReadAll" @click="toArticle">
         <div>阅读全文</div>
@@ -68,12 +68,14 @@ export default {
   },
   mounted() {
     //博客id传到vuex中
-    // this.$store.state.article.articleID = this.blogID;
     this.$store.commit('article/setArticleID',this.blogID)
   },
   methods: {
     toArticle() {
       this.$router.push("article");
+    },
+    editArticle(){
+      console.log('editArticle');
     },
     confirmDelete() {
       this.$confirm("此操作将永久删除该文章, 是否继续?", "提示", {

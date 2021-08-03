@@ -24,12 +24,27 @@ import axios from "axios";
 export default {
   name: "Home",
   components: { Tinymce },
+  props: {
+    title:{
+      type: String,
+      default(){
+        return ""
+      }
+    },
+    content: {
+      type: String,
+      default() {
+        return "";
+      },
+    },
+  },
   data() {
     return {
-      content: "",
-      title: "",
+      // content: "",
+      // title: "",
     };
   },
+
   methods: {
     back() {
       this.$router.go(-1)

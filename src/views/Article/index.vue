@@ -48,13 +48,20 @@ export default {
     HotTag,
     HotRecommend,
   },
-  props: {
-    // content: {
-    //   type: String,
-    //   default() {
-    //     return "<h2> Article NOT Found </h2>";
-    //   },
-    // },
+  // props: {
+  //   content: {
+  //     type: String,
+  //     default() {
+  //       return "<h2> Article NOT Found </h2>";
+  //     },
+  //   },
+  // },
+  data() {
+    return {
+      blogID:0,
+      title: "标题",
+      content: "<h3> Article NOT Found </h3>",
+    };
   },
   mounted(){
     this.blogID = this.$store.state.article.articleID
@@ -71,13 +78,7 @@ export default {
             this.content = res.data.result.content
           })
   },
-  data() {
-    return {
-      blogID:0,
-      title: "标题",
-      content: "<h3> Article NOT Found </h3>",
-    };
-  },
+  
 };
 </script>
 
