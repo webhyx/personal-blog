@@ -13,11 +13,17 @@
     </div>
     <el-row :gutter="20">
       <el-col :span="12">
-        <div class="grid-content  left-content">
-        <article-item v-for="(item,index) in content" :key="index" :articleItem="item" :blogID="item.blobid"  :showDelete="true" :showEdit="true" ></article-item>
+        <div class="left-content">
+          <div class="myDraft">我的草稿</div>
+        <article-item v-for="(item,index) in draftContent" :key="index" :articleItem="item" :blogID="item.blobid"  :showDelete="true" :showEdit="true" ></article-item>
       </div>
       </el-col>
-      <el-col :span="12"></el-col>
+      <el-col :span="12">
+        <div class="right-content">
+          <div class="myBlog">我的博客</div>
+        <article-item v-for="(item,index) in blogContent" :key="index" :articleItem="item" :blogID="item.blobid"  :showDelete="true" :showEdit="true" ></article-item>
+      </div>
+      </el-col>
     </el-row>
   </div>
 </template>
@@ -31,32 +37,42 @@ export default {
   },
   data(){
     return {
-      content:[]
+      draftContent:[],
+      blogContent: []
     }
   },
   mounted(){
-    this.gerUserArticle()
+    const braftUrl = `http://121.40.125.179/Blob/DraftGet?token=${this.$store.state.cookie.token}`
+    this.gerUserArticle(braftUrl,'draft')
+    const blogUrl = `http://121.40.125.179/Blob/GetMyBlob?token=${this.$store.state.cookie.token}`
+    this.gerUserArticle(blogUrl,'blog')
   },
   methods: {
     logout() {
       this.$store.commit('cookie/clearToken')
       this.$router.replace('home')
     },
-    gerUserArticle() {
+    gerUserArticle(url,contentType='draft') {
       this.$store.commit("cookie/getToken");
       axios({
-        url:`http://121.40.125.179/Blob/DraftGet?token=${this.$store.state.cookie.token}`,
+        url:url,
         method:"get",
       }).then(res => {
-        console.log('aaa');
         console.log(res);
         let articleArr = res.data.result
-        this.content = articleArr.map( item => {
+        if(contentType == 'draft') {
+          this.draftContent = articleArr.map( item => {
           let brief = this.trimHtml(item.content)
           item.brief = brief
           return item
         })
-        console.log(this.content);
+        } else {
+          this.blogContent = articleArr.map( item => {
+          let brief = this.trimHtml(item.content)
+          item.brief = brief
+          return item
+        })
+        }
       }).catch(err => {
         console.log(err);
       })
@@ -87,8 +103,6 @@ toEdit() {
   min-height: 1000px;
   margin: 0 auto;
   padding-top: 48px;
-
-
   .topLine {
     position: absolute;
     display: flex;
@@ -138,6 +152,24 @@ toEdit() {
         cursor: pointer;
         font-size: 14px;
       }
+    }
+  }
+  .left-content {
+    .myDraft {
+      margin-top: 10px;
+      text-align: center;
+      font-size: 18px;
+      font-family: "微软雅黑";
+      color: #69c37b;
+    }
+  }
+  .right-content {
+    .myBlog {
+      margin-top: 10px;
+      text-align: center;
+      font-size: 18px;
+      font-family: "微软雅黑";
+      color: #69c37b;
     }
   }
 }

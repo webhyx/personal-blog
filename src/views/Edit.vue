@@ -1,6 +1,7 @@
 <template>
   <div class="home">
     <div class="top">
+      <el-button type="info" plain @click="back">返回</el-button>
       <el-input placeholder="请输入标题" v-model="title" clearable></el-input>
       <el-button type="success" plain @click="save">保存</el-button>
       <el-button type="success" plain @click="publish">发布</el-button>
@@ -30,6 +31,9 @@ export default {
     };
   },
   methods: {
+    back() {
+      this.$router.go(-1)
+    },
     save() {
       let data = new FormData();
       // if(document.querySelector("input[type=file]").files[0]){
@@ -63,7 +67,39 @@ export default {
         });
     },
     publish(){
-      this.$router.push('personalHome')
+      
+      let data = new FormData();
+      // if(document.querySelector("input[type=file]").files[0]){
+      //   data.append("files", document.querySelector("input[type=file]").files[0]);
+      // }
+      data.append("content", this.content);
+      data.append("title", this.title);
+      var options = {
+        url: `http://www.hhsunset.top/Blob/BlobUpdate?token=${this.$store.state.cookie.token}`,
+        method: "post",
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        data: data,
+      };
+
+      //send request
+      axios(options)
+        .then((res) => {
+          console.log(res);
+          if(res.data.code == 200) {
+            this.$message({
+                  type: "success",
+                  message: "发步成功!",
+                });
+            this.$router.push('personalHome')
+          } else {
+                this.$message.error("发布失败!");
+              }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
     upDist() {
       let data = new FormData();
@@ -97,6 +133,10 @@ export default {
       margin-left: 10px;
       // background: #69c37b;
       // color: #fff;
+      &:first-child{
+        margin-left: 0;
+        margin-right: 10px;
+      }
     }
   }
   .Tinymce_box {

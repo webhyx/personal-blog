@@ -19,7 +19,7 @@
       </el-col>
     </el-row>
     <div class="pagination">
-      <el-pagination background layout="prev, pager, next" :total="100">
+      <el-pagination background layout="prev, pager, next" :total="100" @current-change="handleCurrentChange">
       </el-pagination>
     </div>
   </div>
@@ -42,32 +42,30 @@ export default {
   },
   data() {
     return {
-      content:[{},{},{},{},{},{}],
+      content:[],
     }
   },
   mounted() {
-    this.gerUserArticle();
+    this.gerUserArticle(6,0);
   },
   methods: {
-    gerUserArticle() {
+    gerUserArticle(size,start) {
       this.$store.commit("cookie/getToken");
       axios({
-        url:`http://121.40.125.179/Blob/DraftGet?token=${this.$store.state.cookie.token}`,
-        // url:'http://121.40.125.179/Blob/getPartPopularBlobDesc',
+        url:'http://121.40.125.179/Blob/getPartPopularBlobDesc',
         method:"get",
-        // params:{
-        //   size:6,
-        //   start:0
-        // }
+        params:{
+          size:size,
+          start:start
+        }
       }).then(res => {
-        console.log('aaa');
         console.log(res);
-        // let articleArr = res.data.result
-        // this.content = articleArr.map( item => {
-        //   let brief = this.trimHtml(item.content)
-        //   item.brief = brief
-        //   return item
-        // })
+        let articleArr = res.data.result
+        this.content = articleArr.map( item => {
+          let brief = this.trimHtml(item.content)
+          item.brief = brief
+          return item
+        })
         console.log(this.content);
       }).catch(err => {
         console.log(err);
@@ -85,6 +83,11 @@ export default {
     // .*贪婪匹配：会尽可能匹配多的   .*?非贪婪匹配：只匹配一个
     str = str.replace(/<\/.*?>/g," ")
     return str;
+},
+handleCurrentChange(val) {
+  console.log(`当前第${val}页`);
+  let realVal = (val-1)*6
+  this.gerUserArticle(6,realVal)
 }
   }
 }

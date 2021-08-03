@@ -73,7 +73,7 @@ export default {
     return {};
   },
   mounted() {
-    console.log(this.blogID);
+    // console.log(this.blogID);
   },
   methods: {
     toArticle() {
