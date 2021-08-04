@@ -10,7 +10,7 @@
       <tinymce v-model="content" :height="500" />
       <div class="editor-content">
         <h3>预览效果：</h3>
-        <div  v-if="content" v-html="content" />
+        <div v-if="content" v-html="content" />
         <!-- {{content}} -->
       </div>
     </div>
@@ -25,11 +25,11 @@ export default {
   name: "Home",
   components: { Tinymce },
   props: {
-    title:{
+    title: {
       type: String,
-      default(){
-        return ""
-      }
+      default() {
+        return "";
+      },
     },
     content: {
       type: String,
@@ -47,7 +47,7 @@ export default {
 
   methods: {
     back() {
-      this.$router.go(-1)
+      this.$router.go(-1);
     },
     save() {
       let data = new FormData();
@@ -69,11 +69,11 @@ export default {
       axios(options)
         .then((res) => {
           console.log(res);
-          if(res.data.code == 200) {
+          if (res.data.code == 200) {
             this.$message({
-                  type: "success",
-                  message: "保存成功!",
-                });
+              type: "success",
+              message: "保存成功!",
+            });
           }
           // this.$router.push('personalHome')
         })
@@ -81,14 +81,17 @@ export default {
           console.log(error);
         });
     },
-    publish(){
-      
+    publish() {
       let data = new FormData();
       // if(document.querySelector("input[type=file]").files[0]){
       //   data.append("files", document.querySelector("input[type=file]").files[0]);
       // }
       data.append("content", this.content);
       data.append("title", this.title);
+      /* 
+      因为params是添加到url的请求字符串中的，用于get请求。 
+      而data是添加到请求体（body）中的， 用于post请求。
+       */
       var options = {
         url: `http://www.hhsunset.top/Blob/BlobUpdate?token=${this.$store.state.cookie.token}`,
         method: "post",
@@ -102,15 +105,15 @@ export default {
       axios(options)
         .then((res) => {
           console.log(res);
-          if(res.data.code == 200) {
+          if (res.data.code == 200) {
             this.$message({
-                  type: "success",
-                  message: "发步成功!",
-                });
-            this.$router.push('personalHome')
+              type: "success",
+              message: "发步成功!",
+            });
+            this.$router.push("personalHome");
           } else {
-                this.$message.error("发布失败!");
-              }
+            this.$message.error("发布失败!");
+          }
         })
         .catch((error) => {
           console.log(error);
@@ -148,26 +151,26 @@ export default {
       margin-left: 10px;
       // background: #69c37b;
       // color: #fff;
-      &:first-child{
+      &:first-child {
         margin-left: 0;
         margin-right: 10px;
       }
     }
   }
   .Tinymce_box {
-  display: flex;
-  margin: 10px;
-}
-.editor-content {
-  margin-left: 30px;
-  flex: 1;
-  background-color: #fff;
-  border: 2px dashed #eee;
-  padding: 0 20px;
-  h3 {
-    color: #808080;
-    text-align: center;
+    display: flex;
+    margin: 10px;
   }
-}
+  .editor-content {
+    margin-left: 30px;
+    flex: 1;
+    background-color: #fff;
+    border: 2px dashed #eee;
+    padding: 0 20px;
+    h3 {
+      color: #808080;
+      text-align: center;
+    }
+  }
 }
 </style>

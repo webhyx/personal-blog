@@ -3,13 +3,21 @@
 // }
 
 const state = {
-    articleID: 0
+    blogID: 0,
+    blogTitle:'',
+    blogContent:'',
 }
 
 const mutations = {
-    setArticleID(state, id) {
-        state.articleID = id
+    setBlogID(state, id) {
+        state.blogID = id
         // storeLocalStore(state)
+    },
+    setBlogTitle(state,title){
+        state.blogTitle = title
+    },
+    setBlogContent(state,content){
+        state.blogContent = content
     }
 }
 

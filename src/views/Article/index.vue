@@ -48,14 +48,6 @@ export default {
     HotTag,
     HotRecommend,
   },
-  // props: {
-  //   content: {
-  //     type: String,
-  //     default() {
-  //       return "<h2> Article NOT Found </h2>";
-  //     },
-  //   },
-  // },
   data() {
     return {
       blogID:0,
@@ -63,9 +55,14 @@ export default {
       content: "<h3> Article NOT Found </h3>",
     };
   },
+  created(){
+    // this.$router.go(0)
+    window.scrollTo(0,0);
+  },
   mounted(){
-    this.blogID = this.$store.state.article.articleID
-    console.log(this.blogID);
+    
+    this.blogID = this.$route.params.id
+    // console.log(this.blogID);
     axios({
             url: "http://www.hhsunset.top/Blob/GetBlobByBlobId",
             method: "get",

@@ -24,12 +24,22 @@ const routes = [
     component: () => import('../views/Edit.vue')
   },
   {
+    path:'/editDraft/:id',
+    name:'EditDraft',
+    component: () => import('../views/EditDraft.vue')
+  },
+  {
+    path:'/editBlog/:id',
+    name:'EditBlog',
+    component: () => import('../views/EditBlog.vue')
+  },
+  {
     path: '/login',
     name: 'Login',
     component: () => import(/* webpackChunkName: "about" */ '../views/Login.vue')
   },
   {
-    path:'/article',
+    path:'/article/:id',
     name:'Article',
     component: () => import('../views/Article')
   },

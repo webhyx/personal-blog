@@ -46,7 +46,6 @@ export default {
     }
   },
   mounted() {
-    localStorage.removeItem("userMsg");
     this.gerUserArticle(6,0);
   },
   methods: {
@@ -61,7 +60,6 @@ export default {
           start:start
         }
       }).then(res => {
-        console.log('getPartPopularBlobDesc');
         console.log(res);
         let articleArr = res.data.result
         this.content = articleArr.map( item => {
@@ -69,7 +67,6 @@ export default {
           item.brief = brief
           return item
         })
-        console.log(this.content);
       }).catch(err => {
         console.log(err);
       })

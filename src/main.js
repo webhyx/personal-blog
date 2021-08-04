@@ -17,7 +17,6 @@ Vue.config.productionTip = false
 
 Vue.use(ElementUI, axios,VueAxios);
 
-document.write('<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />')
 // router.beforeEach((to,from,next) => {
 //   store.commit('cookie/getToken')
 //   let token = store.state.cookie.token

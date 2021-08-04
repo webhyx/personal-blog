@@ -15,13 +15,13 @@
       <el-col :span="12">
         <div class="left-content">
           <div class="myDraft">我的草稿</div>
-        <article-item v-for="(item,index) in draftContent" :key="index" :articleItem="item" :blogID="item.blobid"  :showDelete="true" :showEdit="true" ></article-item>
+        <article-item v-for="(item,index) in draftContent" :key="index" :articleItem="item" :blogID="item.blobid" :blogTitle="item.title" :blogContent="item.content"  :showDelete="true" :showEdit="true" ></article-item>
       </div>
       </el-col>
       <el-col :span="12">
         <div class="right-content">
           <div class="myBlog">我的博客</div>
-        <article-item v-for="(item,index) in blogContent" :key="index" :articleItem="item" :blogID="item.blobid"  :showDelete="true" :showEdit="true" ></article-item>
+        <article-item v-for="(item,index) in blogContent" :key="index" :articleItem="item" :blogID="item.blobid" :blogTitle="item.title" :blogContent="item.content"  :showDelete="true" :showEdit="true" :isDraftorBlog="false"></article-item>
       </div>
       </el-col>
     </el-row>
@@ -38,12 +38,14 @@ export default {
   data(){
     return {
       draftContent:[],
-      blogContent: []
+      blogContent: [],
     }
   },
   mounted(){
-    const braftUrl = `http://121.40.125.179/Blob/DraftGet?token=${this.$store.state.cookie.token}`
-    this.gerUserArticle(braftUrl,'draft')
+
+    const draftUrl = `http://121.40.125.179/Blob/DraftGet?token=${this.$store.state.cookie.token}`
+    this.gerUserArticle(draftUrl,'draft')
+
     const blogUrl = `http://121.40.125.179/Blob/GetMyBlob?token=${this.$store.state.cookie.token}`
     this.gerUserArticle(blogUrl,'blog')
   },

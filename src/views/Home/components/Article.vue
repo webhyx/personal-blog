@@ -44,6 +44,18 @@ export default {
         return 0;
       },
     },
+    blogTitle:{
+      type:String,
+      default(){
+        return ''
+      }
+    },
+    blogContent:{
+      type:String,
+      default(){
+        return ''
+      }
+    },
     showDelete: {
       type: Boolean,
       dafault: false,
@@ -62,21 +74,32 @@ export default {
         return false;
       },
     },
+    isDraftorBlog:{
+      type:Boolean,
+      default:true
+    }
   },
   data() {
     return {};
   },
   mounted() {
     //博客id传到vuex中
-    // console.log(this.blogID);
-    this.$store.commit('article/setArticleID',this.blogID)
+    this.$store.commit('article/setBlogID',this.blogID)
   },
   methods: {
     toArticle() {
-      this.$router.push("article");
+      this.$router.push("article/"+this.blogID);
     },
     editArticle(){
-      console.log('editArticle');
+        this.$store.commit('article/setBlogTitle',this.blogTitle)
+        this.$store.commit('article/setBlogContent',this.blogContent)
+      if(this.isDraftorBlog) {
+        
+        this.$router.push('editDraft/'+this.blogID)
+      } else {
+        this.$router.push('editBlog/'+this.blogID)
+      }
+      
     },
     confirmDelete() {
       this.$confirm("此操作将永久删除该文章, 是否继续?", "提示", {
@@ -85,7 +108,7 @@ export default {
         type: "warning",
       })
         .then(() => {
-          console.log("delete");
+          // console.log("delete");
           this.$store.commit("cookie/getToken");
           axios({
             url: "http://www.hhsunset.top/Blob/DraftDelete",
@@ -96,6 +119,7 @@ export default {
             },
           })
             .then((res) => {
+              console.log('删除接口：');
               console.log(res);
               if (res.data.code == 200) {
                 this.$message({
