@@ -42,11 +42,12 @@ export default {
     }
   },
   mounted(){
-
-    const draftUrl = `http://121.40.125.179/Blob/DraftGet?token=${this.$store.state.cookie.token}`
+    // 这里没有
+    this.$store.commit("cookie/getToken");
+    const draftUrl = `http://www.hhsunset.top/Blob/DraftGet?token=${this.$store.state.cookie.token}`
     this.gerUserArticle(draftUrl,'draft')
 
-    const blogUrl = `http://121.40.125.179/Blob/GetMyBlob?token=${this.$store.state.cookie.token}`
+    const blogUrl = `http://www.hhsunset.top/Blob/GetMyBlob?token=${this.$store.state.cookie.token}`
     this.gerUserArticle(blogUrl,'blog')
   },
   methods: {

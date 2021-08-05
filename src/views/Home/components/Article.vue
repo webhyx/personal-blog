@@ -110,8 +110,9 @@ export default {
         .then(() => {
           // console.log("delete");
           this.$store.commit("cookie/getToken");
+          const deleteUrl = this.isDraftorBlog ? "http://www.hhsunset.top/Blob/DraftDelete": "http://www.hhsunset.top/Blob/BlobDelete"
           axios({
-            url: "http://www.hhsunset.top/Blob/DraftDelete",
+            url: deleteUrl,
             method: "get",
             params: {
               blobid: this.blogID,
@@ -152,11 +153,14 @@ export default {
   position: relative;
   width: 95%;
   height: 230px;
-  margin: 10px auto;
   background-color: #fff;
   border: 1px #f0f0f0 solid;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
+  margin-top: 20px;
+  &:first-child {
+    margin-top: 0;
+  }
   &:hover {
     transform: scale(1.01); // 放大1.01倍
     transition: all 0.3s; // 设置加载时间

@@ -74,6 +74,9 @@ export default {
               type: "success",
               message: "保存成功!",
             });
+            this.$router.push('personalHome')
+          } else {
+            this.$message.error("发布失败!");
           }
           // this.$router.push('personalHome')
         })
@@ -108,7 +111,7 @@ export default {
           if (res.data.code == 200) {
             this.$message({
               type: "success",
-              message: "发步成功!",
+              message: "发布成功!",
             });
             this.$router.push("personalHome");
           } else {

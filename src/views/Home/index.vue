@@ -1,6 +1,7 @@
 <template>
   <div class="home-main">
-      <login-head></login-head>
+    <tab-bar></tab-bar>
+     <carousel></carousel>
       <el-row :gutter="20">
     <el-col :span="18">
       <div class="grid-content  left-content">
@@ -26,7 +27,8 @@
 </template>
 
 <script>
-import LoginHead from '@/components/Head.vue'
+import TabBar from '@/components/TabBar.vue'
+import Carousel from '@/components/Carousel.vue'
 import ArticleItem from './components/Article.vue'
 import Introduction from '@/components/Navigation.vue'
 import HotTag from '@/components/HotTag.vue'
@@ -35,7 +37,8 @@ import axios from "axios";
 
 export default {
   components: {
-    LoginHead,
+    TabBar,
+    Carousel,
     Introduction,
     ArticleItem,
     HotTag,
@@ -46,7 +49,7 @@ export default {
     }
   },
   mounted() {
-    this.gerUserArticle(6,0);
+    this.gerUserArticle(1,0);
   },
   methods: {
     // 获取部分博客
@@ -88,8 +91,9 @@ export default {
 // 换页
 handleCurrentChange(val) {
   console.log(`当前第${val}页`);
-  let realVal = (val-1)*6
-  this.gerUserArticle(6,realVal)
+  let realVal = val-1
+  this.gerUserArticle(1,realVal)
+  window.scrollTo(0,0)
 }
   }
 }
@@ -100,10 +104,18 @@ handleCurrentChange(val) {
     width: 90%;
     margin: 0 auto;
     position: relative;
+    padding-top: 410px;
+    .carousel {
+      position: absolute;
+      // width: 480px;
+      width: 105%;
+      top: 45px;
+      left: -2.5%;
+    }
     .head {
        position: absolute;
       right: -60px;
-      top: 13px;
+      top: 200px;
     }
     .el-row {
   margin-bottom: 20px;
@@ -127,9 +139,11 @@ handleCurrentChange(val) {
       margin-top: 20px;
     }
   }
-  .el-col {
+  /deep/ .el-col {
     border-radius: 4px;
     margin-top: 10px;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
   }
 
   .grid-content {
