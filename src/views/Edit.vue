@@ -24,24 +24,11 @@ import axios from "axios";
 export default {
   name: "Home",
   components: { Tinymce },
-  props: {
-    title: {
-      type: String,
-      default() {
-        return "";
-      },
-    },
-    content: {
-      type: String,
-      default() {
-        return "";
-      },
-    },
-  },
+
   data() {
     return {
-      // content: "",
-      // title: "",
+      content: "",
+      title: "",
     };
   },
 
@@ -51,9 +38,9 @@ export default {
     },
     save() {
       let data = new FormData();
-      // if(document.querySelector("input[type=file]").files[0]){
-      //   data.append("files", document.querySelector("input[type=file]").files[0]);
-      // }
+      if(document.querySelector("input[type=file]").files[0]){
+        data.append("files", document.querySelector("input[type=file]").files);
+      }
       data.append("content", this.content);
       data.append("title", this.title);
       var options = {
@@ -85,10 +72,14 @@ export default {
         });
     },
     publish() {
+      console.log('1');
+      // console.log(document.querySelector("input[type=file]").files);
+      console.log(this.$store.state.article.FileList);
+      console.log('2');
       let data = new FormData();
-      // if(document.querySelector("input[type=file]").files[0]){
-      //   data.append("files", document.querySelector("input[type=file]").files[0]);
-      // }
+     if(document.querySelector("input[type=file]").files[0]){
+        data.append("files", this.$store.state.article.FileList);
+      }
       data.append("content", this.content);
       data.append("title", this.title);
       /* 
@@ -121,6 +112,8 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+
+        this.$store.commit('article/clearFileList')
     },
     upDist() {
       let data = new FormData();

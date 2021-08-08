@@ -6,6 +6,7 @@ const state = {
     blogID: 0,
     blogTitle:'',
     blogContent:'',
+    FileList:[]
 }
 
 const mutations = {
@@ -18,6 +19,12 @@ const mutations = {
     },
     setBlogContent(state,content){
         state.blogContent = content
+    },
+    setFileList(state,arr) {
+        state.FileList.push(arr)
+    },
+    clearFileList(state){
+        state.FileList = []
     }
 }
 

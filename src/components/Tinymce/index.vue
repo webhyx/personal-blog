@@ -164,14 +164,10 @@ export default {
     getContent() {
       window.tinymce.get(this.tinymceId).getContent()
     },
-    imageSuccessCBK(arr) {
-      arr.forEach(item => window.tinymce.get(this.tinymceId).insertContent(`<img class="wscnph" src="${item}" >`))
-    },
-    upLoadImgArr(item) {
-      this.imgArr.push(item)
-      
-      console.log('index');
-      console.log(this.imgArr);
+    imageSuccessCBK(item) {
+      // this.imgArr.push(item)
+      // this.imgArr.forEach(item => window.tinymce.get(this.tinymceId).insertContent(`<img class="wscnph" src="${item}" >`))
+      window.tinymce.get(this.tinymceId).insertContent(`<img class="wscnph" src="${item}" >`)
     },
   }
 }

@@ -5,7 +5,7 @@
       icon="el-icon-upload"
       size="mini"
       type="primary"
-      @click="dialogVisible = true"
+      @click="clickUpload"
     >
       upload
     </el-button>
@@ -17,7 +17,6 @@
         :show-file-list="true"
         :on-remove="handleRemove"
         :on-success="handleSuccess"
-        :before-upload="beforeUpload"
         class="editor-slide-upload"
         :action="dataUpdate"
         list-type="picture-card"
@@ -46,7 +45,7 @@ export default {
   data() {
     return {
       dialogVisible: false,
-      dataUpdate:`http://121.40.125.179/Blob/ImgUpdate?token=${this.$store.state.cookie.token}`,
+      dataUpdate: `http://121.40.125.179/Blob/ImgUpdate?token=${this.$store.state.cookie.token}`,
       imgUrlList: [],
       listObj: {},
       fileList: [],
@@ -54,55 +53,47 @@ export default {
   },
   methods: {
     submitUpload() {
-        this.$refs.upload.submit();
-      },
-    // checkAllSuccess() {
-    //   return Object.keys(this.listObj).every(item => this.listObj[item].hasSuccess)
-    // },
+      this.$refs.upload.submit();
+    },
+    clickUpload(){
+      // fileList 存储的就是图片对象，要上传的信息
+      this.fileList = []
+      this.dialogVisible = true
+    },
     handleSubmit() {
-      // const arr = Object.keys(this.listObj).map(v => this.listObj[v])
-      // if (!this.checkAllSuccess()) {
-      //   this.$message('Please wait for all images to be uploaded successfully. If there is a network problem, please refresh the page and upload again!')
-      //   return
-      // }
-      //  let formData = new window.FormData()
-                   
-      //               let files= document.querySelector('input[type=file]').files;
-      //               for (let index = 0; index < files.length; index++) {
-      //                   formData.append('files',files[index])
-      //               }
-      console.log(this.fileList);
-      this.$emit("successCBK", this.imgUrlList);
-      this.imgUrlList = [];
-      // this.listObj = {}
-      this.fileList = [];
+      const imgFiles = document.querySelector("input[type=file]").files;
+      this.$store.commit('article/setFileList',imgFiles)
+      for (let index = 0; index < imgFiles.length; index++) {
+        const reader = new FileReader();
+        reader.readAsDataURL(imgFiles[index]);
+        reader.onload = () => {
+          const _base64 = reader.result;
+          // this.imgUrlList.push(_base64); //将_base64赋值给图片的src，实现图片预览
+          // console.log("FileReader");
+          // console.log(this.imgUrlList);
+          this.$emit("successCBK", _base64);
+        };
+      }
       this.dialogVisible = false;
+      // this.imgUrlList = []
+      console.log(this.fileList);
+      // this.fileList = []
+
     },
     hanleFail(err, file, fileList) {
-      console.log('no');
+      console.log("no");
       console.log(err);
       console.log(fileList);
     },
     handleSuccess(response, file, fileList) {
-      console.log('yes');
+      console.log("yes");
       console.log(response);
       console.log(fileList);
-      const imgUrlRes = fileList.map((item) => {
-        item = `http://121.40.125.179${item.response.result.msg}`;
-        return item
-      });
-      this.imgUrlList = imgUrlRes;
-      // const uid = file.uid
-      // const objKeyArr = Object.keys(this.listObj)
-      // for (let i = 0, len = objKeyArr.length; i < len; i++) {
-      //   if (this.listObj[objKeyArr[i]].uid === uid) {
-      //     this.listObj[objKeyArr[i]].url = response.files.file
-      //     this.listObj[objKeyArr[i]].hasSuccess = true
-      //     return
-      //   }
-      // }
-      // console.log('listObj::::::');
-      // console.log(this.listObj);
+      // const imgUrlRes = fileList.map((item) => {
+      //   item = `http://121.40.125.179${item.response.result.msg}`;
+      //   return item
+      // });
+      // this.imgUrlList = imgUrlRes;
     },
     handleRemove(file) {
       // const uid = file.uid
@@ -115,18 +106,6 @@ export default {
       // }
     },
     beforeUpload(file) {
-      // const _self = this
-      // const _URL = window.URL || window.webkitURL
-      // const fileName = file.uid
-      // this.listObj[fileName] = {}
-      // return new Promise((resolve, reject) => {
-      //   const img = new Image()
-      //   img.src = _URL.createObjectURL(file)
-      //   img.onload = function() {
-      //     _self.listObj[fileName] = { hasSuccess: false, uid: file.uid, width: this.width, height: this.height }
-      //   }
-      //   resolve(true)
-      // })
       let types = ["image/jpeg", "image/gif", "image/bmp", "image/png"];
       // 判断图片类型 includes判断是否是数组中的某个元素
       const isImage = types.includes(file.type);

@@ -49,18 +49,18 @@ export default {
     }
   },
   mounted() {
-    this.gerUserArticle(1,0);
+    this.gerUserArticle(0,4);
   },
   methods: {
     // 获取部分博客
-    gerUserArticle(size,start) {
+    gerUserArticle(start,end) {
       this.$store.commit("cookie/getToken");
       axios({
         url:'http://www.hhsunset.top/Blob/getPartPopularBlobDesc',
         method:"get",
         params:{
-          size:size,
-          start:start
+          start:start,
+          end:end
         }
       }).then(res => {
         console.log(res);
@@ -91,8 +91,8 @@ export default {
 // 换页
 handleCurrentChange(val) {
   console.log(`当前第${val}页`);
-  let realVal = val-1
-  this.gerUserArticle(1,realVal)
+  let realVal = (val-1)*4
+  this.gerUserArticle(realVal,realVal+4)
   window.scrollTo(0,0)
 }
   }
