@@ -21,7 +21,7 @@ const mutations = {
         state.blogContent = content
     },
     setFileList(state,arr) {
-        state.FileList.push(arr)
+        state.FileList.concat(arr)
     },
     clearFileList(state){
         state.FileList = []

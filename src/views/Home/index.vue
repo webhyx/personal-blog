@@ -86,6 +86,7 @@ export default {
     str = str.replace(/<[^/]*>/g,"");
     // .*贪婪匹配：会尽可能匹配多的   .*?非贪婪匹配：只匹配一个
     str = str.replace(/<\/.*?>/g," ")
+    // str = str.replace(/<[^>]*>/, "");
     return str;
 },
 // 换页

@@ -12,7 +12,7 @@
     <el-dialog :visible.sync="dialogVisible">
       <el-upload
         ref="upload"
-        :multiple="true"
+        :multiple="false"
         :file-list="fileList"
         :show-file-list="true"
         :on-remove="handleRemove"
@@ -25,6 +25,7 @@
       >
         <el-button size="small" type="primary"> Click upload </el-button>
       </el-upload>
+
       <el-button @click="dialogVisible = false"> Cancel </el-button>
       <el-button type="primary" @click="handleSubmit"> Confirm </el-button>
     </el-dialog>
@@ -62,7 +63,7 @@ export default {
     },
     handleSubmit() {
       const imgFiles = document.querySelector("input[type=file]").files;
-      this.$store.commit('article/setFileList',imgFiles)
+      this.$store.commit('article/setFileList',this.fileList)
       for (let index = 0; index < imgFiles.length; index++) {
         const reader = new FileReader();
         reader.readAsDataURL(imgFiles[index]);

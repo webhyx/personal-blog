@@ -53,6 +53,7 @@ export default {
       blogID:0,
       title: "标题",
       content: "<h3> Article NOT Found </h3>",
+      imgPaths:[]
     };
   },
   created(){
@@ -71,10 +72,28 @@ export default {
             },
           }).then((res) => {
             console.log(res);
+            this.imgPaths = res.data.result.paths
             this.title = res.data.result.title
             this.content = res.data.result.content
+            this.showImg()
           })
+    
   },
+  methods:{
+    showImg(){
+      this.imgPaths = this.imgPaths.map(item => {
+        item = `http://www.hhsunset.top${item}`
+        return item
+      });
+      console.log(this.imgPaths);
+      // for(let i=0;i<this.imgPaths.length;i++) {
+        
+      // }
+      this.content = this.content.replace(/\$\[]/g ,this.imgPaths[0])
+      // document.getElementsByTagName('img').setAttribute("height","300px")
+  
+    }
+  }
   
 };
 </script>

@@ -167,7 +167,7 @@ export default {
     imageSuccessCBK(item) {
       // this.imgArr.push(item)
       // this.imgArr.forEach(item => window.tinymce.get(this.tinymceId).insertContent(`<img class="wscnph" src="${item}" >`))
-      window.tinymce.get(this.tinymceId).insertContent(`<img class="wscnph" src="${item}" >`)
+      window.tinymce.get(this.tinymceId).insertContent(`<img class='wscnph' src='${item}'/>`)
     },
   }
 }
