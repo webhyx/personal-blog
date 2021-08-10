@@ -1,14 +1,16 @@
 <template>
   <div class="tabBar">
-    
-    <div class="toLogin" @click="toLogin" >登陆</div>
-    <el-avatar size="medium" :src="circleUrl"></el-avatar>
-    <el-input
-      placeholder="请输入搜索内容"
-      prefix-icon="el-icon-search"
-      v-model="searchInput"
-    >
-    </el-input>
+    <div class="tabBarAbso">
+      <div class="toLogin" @click="toLogin">登陆</div>
+      <el-avatar size="medium" :src="circleUrl"></el-avatar>
+      <el-button @click="searchBlog">搜索</el-button>
+      <el-input
+        placeholder="请输入搜索内容"
+        prefix-icon="el-icon-search"
+        v-model="searchInput"
+      >
+      </el-input>
+    </div>
   </div>
 </template>
 
@@ -25,33 +27,38 @@ export default {
     toLogin() {
       this.$router.push("login");
     },
+    searchBlog() {
+      this.$emit("searchBlog", this.searchInput);
+    },
   },
 };
 </script>
 
 <style lang="less" scoped>
-.tabBar {
-  position: fixed;
+.tabBarAbso {
+  position: absolute;
   display: flex;
   flex-direction: row-reverse;
-  top: 0;
+  top: -48px;
   left: 0;
   width: 100%;
   height: 48px;
   z-index: 99;
   align-items: center;
+  // background-color: @themeColor;
   background-color: #fff;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
   .toLogin {
-      margin: 0 20px 0 15px;
-      cursor: pointer;
+    margin: 0 20px 0 15px;
+    cursor: pointer;
   }
   .el-avatar {
-      margin-left: 15px;
+    margin-left: 15px;
   }
-  .el-input {
-      width: 200px;
-      margin-left: 15px;
+    .el-input {
+    width: 200px;
+    margin-left: 15px;
   }
 }
+
 </style>

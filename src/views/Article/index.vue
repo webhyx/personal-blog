@@ -20,8 +20,8 @@
               </div>
             </div>
           </div>
-          <div class="article-content">
-            <div v-html="content" />
+          <div class="article-content" @click="handleHtml($event)">
+            <div v-html="content"  />
           </div>
         </div>
       </el-col>
@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from "axios";
 import HotTag from "@/components/HotTag.vue";
 import HotRecommend from "@/components/HotRecommend.vue";
 export default {
@@ -50,51 +50,50 @@ export default {
   },
   data() {
     return {
-      blogID:0,
+      blogID: 0,
       title: "标题",
       content: "<h3> Article NOT Found </h3>",
-      imgPaths:[]
+      imgPaths: [],
     };
   },
-  created(){
+  created() {
     // this.$router.go(0)
-    window.scrollTo(0,0);
-  },
-  mounted(){
-    
-    this.blogID = this.$route.params.id
+    window.scrollTo(0, 0);
+
+    this.blogID = this.$route.params.id;
     // console.log(this.blogID);
     axios({
-            url: "http://www.hhsunset.top/Blob/GetBlobByBlobId",
-            method: "get",
-            params: {
-              blobid:this.blogID,
-            },
-          }).then((res) => {
-            console.log(res);
-            this.imgPaths = res.data.result.paths
-            this.title = res.data.result.title
-            this.content = res.data.result.content
-            this.showImg()
-          })
-    
+      url: "http://www.hhsunset.top/Blob/GetBlobByBlobId",
+      method: "get",
+      params: {
+        blobid: this.blogID,
+      },
+    }).then((res) => {
+      console.log(res);
+      this.imgPaths = res.data.result.paths;
+      this.title = res.data.result.title;
+      this.content = res.data.result.content;
+      this.showImg();
+    });
   },
-  methods:{
-    showImg(){
-      this.imgPaths = this.imgPaths.map(item => {
-        item = `http://www.hhsunset.top${item}`
-        return item
+  mounted() {
+    // getImgDom[0].attr("style","max-width:200px")
+  },
+  methods: {
+    handleHtml($event){
+　　　　console.log($event.target)
+　　},
+    showImg() {
+      this.imgPaths = this.imgPaths.map((item) => {
+        item = `http://www.hhsunset.top${item}`;
+        return item;
       });
-      console.log(this.imgPaths);
-      // for(let i=0;i<this.imgPaths.length;i++) {
-        
-      // }
-      this.content = this.content.replace(/\$\[]/g ,this.imgPaths[0])
-      // document.getElementsByTagName('img').setAttribute("height","300px")
-  
-    }
-  }
-  
+      this.content = this.content.replace(/\$\[]/g, this.imgPaths[0]);
+      // let getImgDom = document.getElementsByTagName("img")
+      // let getImgDom = document.getElementsByClassName("wscnph");
+      // getImgDom[0].style["max-width"] = "200px";
+    },
+  },
 };
 </script>
 
@@ -185,6 +184,12 @@ export default {
               margin-left: 6px;
             }
           }
+        }
+      }
+      .article-content {
+        /* v-html的内容要样式穿透 */
+       /deep/ .wscnph {
+          width: 500px;
         }
       }
     }

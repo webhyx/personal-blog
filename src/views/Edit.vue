@@ -78,7 +78,7 @@ export default {
         data.append("files",document.querySelector("input[type=file]").files[0]);
       }
       // <img class="wscnph" src="${item}" >
-      let txtContent= this.content.replace(/<+img class="wscnph" src=".*?"+\s\/>/g ,"<img class='wscnph' src='$[]'/>")
+      let txtContent= this.content.replace(/<+img class="wscnph" src=".*?"+\s\/>/g ,"<img class='wscnph' style='max-width:650px' src='$[]'/>")
       console.log(txtContent);
       data.append("content", txtContent);
       data.append("title", this.title);

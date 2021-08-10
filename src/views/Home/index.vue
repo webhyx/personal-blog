@@ -1,6 +1,10 @@
 <template>
+    <div class="main">
+      <tab-bar @searchBlog="searchBlog"></tab-bar>
+          <div class="tabBarSticky">
+      <div>tab</div>
+    </div>
   <div class="home-main">
-    <tab-bar></tab-bar>
      <carousel></carousel>
       <el-row :gutter="20">
     <el-col :span="18">
@@ -24,6 +28,7 @@
       </el-pagination>
     </div>
   </div>
+    </div>
 </template>
 
 <script>
@@ -86,7 +91,8 @@ export default {
     str = str.replace(/<[^/]*>/g,"");
     // .*贪婪匹配：会尽可能匹配多的   .*?非贪婪匹配：只匹配一个
     str = str.replace(/<\/.*?>/g," ")
-    // str = str.replace(/<[^>]*>/, "");
+    // 去掉单标签如<img src="xxx" />
+    str = str.replace(/<.*?\/>/g,"")
     return str;
 },
 // 换页
@@ -95,22 +101,37 @@ handleCurrentChange(val) {
   let realVal = (val-1)*4
   this.gerUserArticle(realVal,realVal+4)
   window.scrollTo(0,0)
+},
+searchBlog(content){
+  console.log(content);
 }
   }
 }
 </script>
 
 <style lang="less" scoped>
+.tabBarSticky {
+  // position: -webkit-sticky;
+  position: sticky;
+  background-color: #fff;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+  width: 100%;
+  height: 48px;
+  margin-top: 48px;
+  top: 0;
+  z-index: 999;
+
+}
   .home-main {
     width: 90%;
     margin: 0 auto;
     position: relative;
-    padding-top: 410px;
+    padding-top: 365px;
     .carousel {
       position: absolute;
       // width: 480px;
       width: 105%;
-      top: 45px;
+      top: 0;
       left: -2.5%;
     }
     .head {

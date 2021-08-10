@@ -1,7 +1,7 @@
 <template>
   <div id="test">
    <el-button
-      :style="{ background: color, borderColor: color }"
+      style="{ background: blue, borderColor: blue }"
       icon="el-icon-upload"
       size="mini"
       type="primary"
@@ -17,6 +17,8 @@
       <el-button @click="dialogVisible = false"> Cancel </el-button>
       <el-button type="primary" @click="handleSubmit"> Confirm </el-button>
     </el-dialog>
+
+    <img src="../assets/logo.png" class="xxx" alt="" width="600px">
   </div>
 </template>
 <script>
@@ -46,11 +48,13 @@ export default {
     },
   },
 
-  mounted() {},
+  mounted() {
+    let getX = document.getElementsByClassName("xxx")
+    console.log(getX);
+    getX[0].style["width"] = "300px"
+  },
 };
 </script>
 <style lang="less" scoped>
-.imgUpload {
 
-}
 </style>

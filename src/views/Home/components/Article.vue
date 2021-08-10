@@ -1,7 +1,7 @@
 <template>
   <div class="article">
-    <div class="title">
-      <a href="">{{ articleItem.title }}</a>
+    <div class="title" @click="toArticle">
+      <span href="">{{ articleItem.title }}</span>
     </div>
     <div class="classify">
       <span class="text">分类：</span>
@@ -170,14 +170,15 @@ export default {
     padding: 6px 0 10px 0;
     margin-left: 10px;
     border-bottom: #eee 1px solid;
-    a {
+    span {
       text-decoration: none;
+      cursor: pointer;
       color: rgb(71, 61, 61);
       font-size: 23px;
       font-family: "微软雅黑";
       font-weight: bold;
     }
-    a:hover {
+    span:hover {
       color: #69c37b;
     }
   }
