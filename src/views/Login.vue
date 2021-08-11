@@ -22,8 +22,8 @@ export default {
   components: {  },
   data() {
     return {
-      account:'740006840@qq.com',
-      password:'huangyuxuan'
+      account:'',
+      password:''
     };
   },
   mounted(){
@@ -34,7 +34,7 @@ export default {
       axios({
         method: "get",
         // url: "http://121.40.125.179/token",
-        url:"http://www.hhsunset.top/token",
+        url:"/api/token",
         params: {
           email: account,
           password: password,

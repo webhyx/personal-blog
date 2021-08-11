@@ -110,7 +110,7 @@ export default {
         .then(() => {
           // console.log("delete");
           this.$store.commit("cookie/getToken");
-          const deleteUrl = this.isDraftorBlog ? "http://www.hhsunset.top/Blob/DraftDelete": "http://www.hhsunset.top/Blob/BlobDelete"
+          const deleteUrl = this.isDraftorBlog ? "/api/Blob/DraftDelete": "/api/Blob/BlobDelete"
           axios({
             url: deleteUrl,
             method: "get",

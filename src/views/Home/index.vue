@@ -73,7 +73,7 @@ export default {
     gerUserArticle(start, end) {
       this.$store.commit("cookie/getToken");
       axios({
-        url: "http://www.hhsunset.top/Blob/getPartPopularBlobDesc",
+        url: "/api/Blob/getPartPopularBlobDesc",
         method: "get",
         params: {
           start: start,

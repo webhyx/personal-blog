@@ -55,7 +55,7 @@ let data = new FormData();
       data.append("title", this.title);
       data.append("token",this.$store.state.cookie.token)
       const options ={
-          url:`http://www.hhsunset.top/Blob/BlobChange`,
+          url:`/api/Blob/BlobChange`,
           method:'post',
           data:data
       }

@@ -68,7 +68,7 @@ export default {
       data.append("title", this.title);
       data.append("token",this.$store.state.cookie.token)
       const options ={
-          url:`http://www.hhsunset.top/Blob/DraftChange`,
+          url:`/api/Blob/DraftChange`,
           method:'post',
           data:data
       }

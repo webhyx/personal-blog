@@ -44,7 +44,7 @@ export default {
       data.append("content", this.content);
       data.append("title", this.title);
       var options = {
-        url: `http://www.hhsunset.top/Blob/DraftUpdate?token=${this.$store.state.cookie.token}`,
+        url: `/api/Blob/DraftUpdate?token=${this.$store.state.cookie.token}`,
         method: "post",
         headers: {
           "Content-Type": "multipart/form-data",
@@ -87,7 +87,7 @@ export default {
       而data是添加到请求体（body）中的， 用于post请求。
        */
       var options = {
-        url: `http://www.hhsunset.top/Blob/BlobUpdate?token=${this.$store.state.cookie.token}`,
+        url: `/api/Blob/BlobUpdate?token=${this.$store.state.cookie.token}`,
         method: "post",
         headers: {
           "Content-Type": "multipart/form-data",
@@ -120,7 +120,7 @@ export default {
       data.append("token", this.$store.state.cookie.token);
       data.append("file", document.querySelector("input[type=file]").files[0]);
       var options = {
-        url: `http://www.hhsunset.top/NodeJsDeployment`,
+        url: `/api/NodeJsDeployment`,
         method: "post",
         headers: {
           "Content-Type": "multipart/form-data",

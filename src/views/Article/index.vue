@@ -66,7 +66,7 @@ export default {
     this.blogID = this.$route.params.id;
     // console.log(this.blogID);
     axios({
-      url: "http://www.hhsunset.top/Blob/GetBlobByBlobId",
+      url: "/api/Blob/GetBlobByBlobId",
       method: "get",
       params: {
         blobid: this.blogID,
@@ -88,7 +88,7 @@ export default {
 　　},
     showImg() {
       this.imgPaths = this.imgPaths.map((item) => {
-        item = `http://www.hhsunset.top${item}`;
+        item = `/api${item}`;
         return item;
       });
       this.content = this.content.replace(/\$\[]/g, this.imgPaths[0]);

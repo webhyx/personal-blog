@@ -15,6 +15,7 @@
     </div>
     <div class="comment-list">
         <p>共{{commentNum}}条评论</p>
+        <div class="noComment">现在还没有人评论，快来评论吧！</div>
     </div>
   </div>
 </template>

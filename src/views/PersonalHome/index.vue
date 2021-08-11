@@ -44,10 +44,10 @@ export default {
   mounted(){
     // 这里没有
     this.$store.commit("cookie/getToken");
-    const draftUrl = `http://www.hhsunset.top/Blob/DraftGet?token=${this.$store.state.cookie.token}`
+    const draftUrl = `/api/Blob/DraftGet?token=${this.$store.state.cookie.token}`
     this.gerUserArticle(draftUrl,'draft')
 
-    const blogUrl = `http://www.hhsunset.top/Blob/GetMyBlob?token=${this.$store.state.cookie.token}`
+    const blogUrl = `/api/Blob/GetMyBlob?token=${this.$store.state.cookie.token}`
     this.gerUserArticle(blogUrl,'blog')
   },
   methods: {
