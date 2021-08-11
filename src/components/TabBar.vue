@@ -3,13 +3,6 @@
     <div class="tabBarAbso">
       <div class="toLogin" @click="toLogin">登陆</div>
       <el-avatar size="medium" :src="circleUrl"></el-avatar>
-      <el-button @click="searchBlog">搜索</el-button>
-      <el-input
-        placeholder="请输入搜索内容"
-        prefix-icon="el-icon-search"
-        v-model="searchInput"
-      >
-      </el-input>
     </div>
   </div>
 </template>
@@ -20,16 +13,14 @@ export default {
     return {
       circleUrl:
         "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
-      searchInput: "",
+      
     };
   },
   methods: {
     toLogin() {
       this.$router.push("login");
     },
-    searchBlog() {
-      this.$emit("searchBlog", this.searchInput);
-    },
+    
   },
 };
 </script>

@@ -24,6 +24,7 @@
             <div v-html="content"  />
           </div>
         </div>
+          <comment></comment>
       </el-col>
       <el-col :span="6">
         <div class="right-content">
@@ -43,10 +44,12 @@
 import axios from "axios";
 import HotTag from "@/components/HotTag.vue";
 import HotRecommend from "@/components/HotRecommend.vue";
+import Comment from './components/Comment.vue'
 export default {
   components: {
     HotTag,
     HotRecommend,
+    Comment
   },
   data() {
     return {
