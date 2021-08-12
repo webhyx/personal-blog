@@ -44,7 +44,7 @@
 <script>
 import TabBar from "@/components/TabBar.vue";
 import tabBarSticky from "./components/TabBarSticky.vue"
-import Carousel from "@/components/Carousel.vue";
+import Carousel from "@/components/Carousel";
 import ArticleItem from "./components/Article.vue";
 import Introduction from "@/components/Navigation.vue";
 import HotTag from "@/components/HotTag.vue";
@@ -129,7 +129,7 @@ export default {
   width: 90%;
   margin: 0 auto;
   position: relative;
-  padding-top: 365px;
+  padding-top: 540px;
   .carousel {
     position: absolute;
     // width: 480px;

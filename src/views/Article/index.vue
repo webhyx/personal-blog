@@ -24,7 +24,7 @@
             <div v-html="content"  />
           </div>
         </div>
-          <comment></comment>
+          <comment :userId="userid" :comments="comments"></comment>
       </el-col>
       <el-col :span="6">
         <div class="right-content">
@@ -53,10 +53,12 @@ export default {
   },
   data() {
     return {
-      blogID: 0,
+      blogID:0,
+      userid:0,
       title: "标题",
       content: "<h3> Article NOT Found </h3>",
       imgPaths: [],
+      comments:[]
     };
   },
   created() {
@@ -76,6 +78,8 @@ export default {
       this.imgPaths = res.data.result.paths;
       this.title = res.data.result.title;
       this.content = res.data.result.content;
+      this.userid = res.data.result.userid
+      this.comments = res.data.result.comments
       this.showImg();
     });
   },

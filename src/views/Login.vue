@@ -22,8 +22,8 @@ export default {
   components: {  },
   data() {
     return {
-      account:'',
-      password:''
+      account:'740006840@qq.com',
+      password:'huangyuxuan'
     };
   },
   mounted(){
@@ -49,7 +49,7 @@ export default {
           // 设一个token，过期时间为会话结束
           this.$store.commit('cookie/setToken',res.data.result.token)
           console.log(res.data.result.token);
-          this.$router.push("/personalHome");
+          this.$router.push("/home");
         } else if(res.data.code === 400){
           this.$message('账号或密码错误！')
         } else {
