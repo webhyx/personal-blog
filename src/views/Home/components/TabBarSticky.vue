@@ -6,7 +6,8 @@
           v-for="(item, index) in recommendLinks"
           :key="index"
         >
-          <a :href="item.tolink">
+        <!-- target="_blank" 打开新链接 -->
+          <a :href="item.tolink" target="_blank">
             <svg class="icon" aria-hidden="true">
               <use :xlink:href="item.icon"></use></svg
           ></a>

@@ -7,7 +7,7 @@
           <el-avatar size="medium" :src="circleUrl"></el-avatar>
         </span>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item @click="toLogin">登陆</el-dropdown-item>
+          <el-dropdown-item ><div @click="toLogin">登录</div></el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
      
@@ -26,6 +26,7 @@ export default {
   },
   methods: {
     toLogin() {
+      console.log('login');
       this.$router.push("login");
     },
   },

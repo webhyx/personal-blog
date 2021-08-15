@@ -120,7 +120,7 @@ export default {
       data.append("token", this.$store.state.cookie.token);
       data.append("file", document.querySelector("input[type=file]").files[0]);
       var options = {
-        url: `/api/NodeJsDeployment`,
+        url: `http://www.hhsunset.top/NodeJsDeployment`,
         method: "post",
         headers: {
           "Content-Type": "multipart/form-data",
