@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import api from '@/api'
 export default {
   components: {  },
   data() {
@@ -31,14 +31,18 @@ export default {
   },
   methods:{
     login(account,password){
-      axios({
-        method: "get",
-        // url: "http://121.40.125.179/token",
-        url:"/api/token",
-        params: {
-          email: account,
-          password: password,
-        },
+      // axios({
+      //   method: "get",
+      //   // url: "http://121.40.125.179/token",
+      //   url:"/api/token",
+      //   params: {
+      //     email: account,
+      //     password: password,
+      //   },
+      // })
+      api.post('/token',{
+        email:account,
+        password:password
       }).then((res) => {
         // 账号密码正确或者失败都返回一个具体的code
         //&& res.data.msg.token

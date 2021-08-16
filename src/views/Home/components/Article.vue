@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import api from '@/api'
 export default {
   props: {
     articleItem: {
@@ -110,14 +110,18 @@ export default {
         .then(() => {
           // console.log("delete");
           this.$store.commit("cookie/getToken");
-          const deleteUrl = this.isDraftorBlog ? "/api/Blob/DraftDelete": "/api/Blob/BlobDelete"
-          axios({
-            url: deleteUrl,
-            method: "get",
-            params: {
-              blobid: this.blogID,
+          const deleteUrl = this.isDraftorBlog ? "/Blob/DraftDelete": "/Blob/BlobDelete"
+          // axios({
+          //   url: deleteUrl,
+          //   method: "get",
+          //   params: {
+          //     blobid: this.blogID,
+          //     token: this.$store.state.cookie.token,
+          //   },
+          // })
+          api.get(deleteUrl,{
+                blobid: this.blogID,
               token: this.$store.state.cookie.token,
-            },
           })
             .then((res) => {
               console.log('删除接口：');

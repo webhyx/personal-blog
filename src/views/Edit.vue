@@ -20,7 +20,7 @@
 
 <script>
 import Tinymce from "@/components/Tinymce";
-import axios from "axios";
+import api from '@/api'
 export default {
   name: "Home",
   components: { Tinymce },
@@ -43,17 +43,18 @@ export default {
       // }
       data.append("content", this.content);
       data.append("title", this.title);
-      var options = {
-        url: `/api/Blob/DraftUpdate?token=${this.$store.state.cookie.token}`,
-        method: "post",
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-        data: data,
-      };
+      // var options = {
+      //   url: `/api/Blob/DraftUpdate?token=${this.$store.state.cookie.token}`,
+      //   method: "post",
+      //   headers: {
+      //     "Content-Type": "multipart/form-data",
+      //   }, 
+      //   data: data,
+      // };
 
       //send request
-      axios(options)
+      
+      api.post(`Blob/DraftUpdate?token=${this.$store.state.cookie.token}`,data)
         .then((res) => {
           console.log(res);
           if (res.data.code == 200) {

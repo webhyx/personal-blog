@@ -19,24 +19,10 @@
 
 <script>
 import Tinymce from "@/components/Tinymce";
-import axios from "axios";
+import api from '@/api'
 export default {
   name: "Home",
   components: { Tinymce },
-//   props: {
-//     title:{
-//       type: String,
-//       default(){
-//         return ""
-//       }
-//     },
-//     content: {
-//       type: String,
-//       default() {
-//         return "";
-//       },
-//     },
-//   },
   data() {
     return {
     title: "",
@@ -67,12 +53,12 @@ export default {
       data.append("files",[])
       data.append("title", this.title);
       data.append("token",this.$store.state.cookie.token)
-      const options ={
-          url:`/api/Blob/DraftChange`,
-          method:'post',
-          data:data
-      }
-      axios(options).then(res => {
+      // const options ={
+      //     url:`/api/Blob/DraftChange`,
+      //     method:'post',
+      //     data:data
+      // }
+      api.post('/Blob/DraftChange',data).then(res => {
           console.log(res);
            if (res.data.code == 200) {
             this.$message({

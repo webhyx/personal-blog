@@ -30,7 +30,7 @@
 
 <script>
 import ArticleItem from '../Home/components/Article.vue'
-import axios from "axios";
+import api from '@/api'
 export default {
   components: {
     ArticleItem
@@ -44,10 +44,10 @@ export default {
   mounted(){
     // 这里没有
     this.$store.commit("cookie/getToken");
-    const draftUrl = `/api/Blob/DraftGet?token=${this.$store.state.cookie.token}`
+    const draftUrl = `Blob/DraftGet?token=${this.$store.state.cookie.token}`
     this.gerUserArticle(draftUrl,'draft')
 
-    const blogUrl = `/api/Blob/GetMyBlob?token=${this.$store.state.cookie.token}`
+    const blogUrl = `Blob/GetMyBlob?token=${this.$store.state.cookie.token}`
     this.gerUserArticle(blogUrl,'blog')
   },
   methods: {
@@ -57,10 +57,11 @@ export default {
     },
     gerUserArticle(url,contentType='draft') {
       this.$store.commit("cookie/getToken");
-      axios({
-        url:url,
-        method:"get",
-      }).then(res => {
+      // axios({
+      //   url:url,
+      //   method:"get",
+      // })
+      api.get(url).then(res => {
         console.log(res);
         let articleArr = res.data.result
         if(contentType == 'draft') {

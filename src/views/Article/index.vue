@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import api from '@/api'
 import HotTag from "@/components/HotTag.vue";
 import HotRecommend from "@/components/HotRecommend.vue";
 import Comment from './components/Comment.vue'
@@ -67,13 +67,14 @@ export default {
 
     this.blogID = this.$route.params.id;
     // console.log(this.blogID);
-    axios({
-      url: "/api/Blob/GetBlobByBlobId",
-      method: "get",
-      params: {
-        blobid: this.blogID,
-      },
-    }).then((res) => {
+    // axios({
+    //   url: "/api/Blob/GetBlobByBlobId",
+    //   method: "get",
+    //   params: {
+    //     blobid: this.blogID,
+    //   },
+    // })
+    api.get('/Blob/GetBlobByBlobId',{blobid:this.blogID}).then((res) => {
       console.log(res);
       this.imgPaths = res.data.result.paths;
       this.title = res.data.result.title;

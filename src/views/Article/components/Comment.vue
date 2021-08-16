@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import api from '@/api'
 export default {
   props:{
     userId:{
@@ -92,16 +92,23 @@ export default {
       let token = this.$store.state.cookie.token
       // post 请求不行
       console.log(token);
-      axios({
-        url:'/api/Blob/CommentBlob',
-        method:'get',
-        params:{
-          ToUid:this.userId,
+      // axios({
+      //   url:'/api/Blob/CommentBlob',
+      //   method:'get',
+      //   params:{
+      //     ToUid:this.userId,
+      //     blobid:this.$route.params.id,
+      //     content:this.textarea,
+      //     token:token
+      //   }
+      // })
+      let params = {
+        ToUid:this.userId,
           blobid:this.$route.params.id,
           content:this.textarea,
           token:token
-        }
-      }).then(res => {
+      }
+      api.get('/Blob/CommentBlob',params).then(res => {
         console.log(res);
       })
     },

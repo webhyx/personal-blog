@@ -19,7 +19,7 @@
 
 <script>
 import Tinymce from "@/components/Tinymce";
-import axios from "axios";
+import api from '@/api'
 export default {
   name: "Home",
   components: { Tinymce },
@@ -54,12 +54,12 @@ let data = new FormData();
       data.append("files",[])
       data.append("title", this.title);
       data.append("token",this.$store.state.cookie.token)
-      const options ={
-          url:`/api/Blob/BlobChange`,
-          method:'post',
-          data:data
-      }
-      axios(options).then(res => {
+      // const options ={
+      //     url:`/api/Blob/BlobChange`,
+      //     method:'post',
+      //     data:data
+      // }
+      api.post('/Blob/BlobChange',data).then(res => {
           console.log(res);
            if (res.data.code == 200) {
             this.$message({
