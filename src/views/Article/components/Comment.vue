@@ -44,7 +44,7 @@
               <el-avatar size="small" :src="item.avatarUrl"></el-avatar>
             </div>
             <span class="user-name" v-if="userId === sonItems.fromUid">作者:　</span>
-            <span class="user-name" v-else>游客{{sonItems.fromUid}}回复:</span>
+            <span class="user-name" v-else>游客{{sonItems.fromUid}}:　</span>
             <span class="content">
               {{sonItems.content}}
               <span class="reply-time">{{sonItems.time}}</span>
@@ -87,14 +87,8 @@ export default {
       commentNum: 0,
       showNoComment: false,
       commentInfo: [
-        {
-          avatarUrl:
-            "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
-          userName: "用户",
-          content: "这水母针不戳",
-          replyTime: "现在",
-        },
       ],
+      commentSecondInfo:[]
     };
   },
   mounted() {
@@ -110,7 +104,11 @@ export default {
         replyTime: item.time,
         sonMessages:item.sonmessages
       });
+      // this.commentSecondInfo.push(
+      //   item.sonmessages
+      // );
     });
+    // 二级评论单独作为个数组：区分 二级评论 和评论二级评论的二级评论
     console.log(this.commentInfo);
   },
   methods: {
@@ -120,16 +118,6 @@ export default {
       let token = this.$store.state.cookie.token;
       // post 请求不行
       console.log(token);
-      // axios({
-      //   url:'/api/Blob/CommentBlob',
-      //   method:'get',
-      //   params:{
-      //     ToUid:this.userId,
-      //     blobid:this.$route.params.id,
-      //     content:this.textarea,
-      //     token:token
-      //   }
-      // })
       let params = {
         ToUid:this.userId,
           blobid:this.$route.params.id,
@@ -146,37 +134,32 @@ export default {
       this.$store.commit("cookie/getToken");
       let token = this.$store.state.cookie.token;
       // post 请求不行
-      axios({
-        url: "/api/Blob/submitCommentBlob",
-        method: "get",
-        params: {
+      let params = {
           ToUid: fromUid, //一级评论的userid
           blobid: this.$route.params.id, 
           content: '我是一个er级评论-1',
           messageid:fromUid, // 一级评论的id 或者评论二级评论时：二级评论的messageid
           token: token,
-        },
-      }).then((res) => {
+        }
+      api.get('/Blob/submitCommentBlob',params).then((res) => {
         console.log(res);
       });
     },
 commentUserSecondComment(e){
       const fromUid = e.fromUid
       const messageId = e.messageid
+      let content = this.content + '[@3]'
       this.$store.commit("cookie/getToken");
       let token = this.$store.state.cookie.token;
       // post 请求不行
-      axios({
-        url: "/api/Blob/submitCommentBlob",
-        method: "get",
-        params: {
+      let params = {
           ToUid: fromUid, //一级评论的userid
           blobid: this.$route.params.id, 
-          content: '我是一个三级评论-2',
+          content: '我是一个三级评论[@3]',
           messageid:messageId, // 一级评论的id 或者评论二级评论时：二级评论的messageid
           token: token,
-        },
-      }).then((res) => {
+        }
+      api.get('/Blob/submitCommentBlob',params).then((res) => {
         console.log(res);
       });
     }
