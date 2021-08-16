@@ -24,7 +24,7 @@
             <div v-html="content"  />
           </div>
         </div>
-          <comment :userId="userid" :comments="comments"></comment>
+          <comment :userId="userid" :comments="comments" :blobId="blobId" v-if="blobId != 0"></comment>
       </el-col>
       <el-col :span="6">
         <div class="right-content">
@@ -58,7 +58,8 @@ export default {
       title: "标题",
       content: "<h3> Article NOT Found </h3>",
       imgPaths: [],
-      comments:[]
+      comments:[],
+      blobId:0
     };
   },
   created() {
@@ -81,6 +82,7 @@ export default {
       this.content = res.data.result.content;
       this.userid = res.data.result.userid
       this.comments = res.data.result.comments
+      this.blobId = res.data.result.blobid 
       this.showImg();
     });
   },

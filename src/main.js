@@ -17,15 +17,17 @@ Vue.config.productionTip = false
 
 Vue.use(ElementUI, axios,VueAxios);
 
-// router.beforeEach((to,from,next) => {
-//   store.commit('cookie/getToken')
-//   let token = store.state.cookie.token
-//   if(!token && to.name !== 'Login') {
-//       next('/login')
-//   } else {
-//       next()
-//   }
-// })
+// 防止用户未登录时在url上直接输入个人相关地址
+router.beforeEach((to,from,next) => {
+  store.commit('cookie/getToken')
+  let token = store.state.cookie.token
+  //  要用()包裹或运算
+  if(!token && to.name === ('PersonalHome'||'Edit'||'EditBlog'||'EditDraft')) {
+      next('login')
+  } else {
+      next()
+  }
+})
 new Vue({
   router,
   store,

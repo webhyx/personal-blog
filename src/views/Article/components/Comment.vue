@@ -19,18 +19,38 @@
         现在还没有人评论，快来评论吧！
       </div>
       <ul class="comment-ul">
-        <li class="comment-li" v-for="(item,index) in commentInfo" :key="index">
+        <li
+          class="comment-li"
+          v-for="(item, index) in commentInfo"
+          :key="index"
+        >
           <div class="user-comment">
             <div class="avatar">
+              <el-avatar size="medium" :src="item.avatarUrl"></el-avatar>
+            </div>
+            <span class="user-name" v-if="userId === item.fromUid">作者:　</span>
+            <span class="user-name" v-else>游客{{ item.fromUid }}：</span>
+            <span class="content">
+              {{ item.content }}
+              <span class="reply-time">{{ item.replyTime }}</span>
+              <!-- No v-for的数据 data-的内容只能找data中定义的，:data-id="item.fromUid" 是undefined -->
+              <!-- 解决方法：直接传item作为参数，在方法中处理item对象 -->
+              <span class="reply" @click="commentUserComment(item)">回复</span>
+            </span>
+          </div>
+          <div class="user-comment-second" v-if="item.sonMessages && Number(item.sonMessages) != 0">
+           <div class="sonMessage" v-for="(sonItems,sonIndex) in item.sonMessages" :key="sonIndex" >
+              <div class="avatar">
               <el-avatar size="small" :src="item.avatarUrl"></el-avatar>
             </div>
-            <span class="user-name">{{item.userName}}：</span>
+            <span class="user-name" v-if="userId === sonItems.fromUid">作者:　</span>
+            <span class="user-name" v-else>游客{{sonItems.fromUid}}回复:</span>
             <span class="content">
-              {{item.content}}
-              <span class="reply-time">{{item.replyTime}}</span>
-            <span class="reply">回复</span>
+              {{sonItems.content}}
+              <span class="reply-time">{{sonItems.time}}</span>
+              <span class="reply" @click="commentUserSecondComment(sonItems)">回复</span>
             </span>
-            
+           </div>
           </div>
         </li>
       </ul>
@@ -41,55 +61,63 @@
 <script>
 import api from '@/api'
 export default {
-  props:{
-    userId:{
-      type:Number,
-      default(){
-        return ''
-      }
+  props: {
+    blobId: {
+      type: Number,
+      default() {
+        return 0;
+      },
     },
-    comments:{
-      type:Array,
-      default(){
-        return []
-      }
-    }
+    userId: {
+      type: Number,
+      default() {
+        return 0;
+      },
+    },
+    comments: {
+      type: Array,
+      default() {
+        return [];
+      },
+    },
   },
   data() {
     return {
       textarea: "",
       commentNum: 0,
       showNoComment: false,
-      commentInfo:[
+      commentInfo: [
         {
-          avatarUrl:"https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
-          userName:"游客",
-          content:"这个水母真好看~这个水母真好看呀真好看~~",
-          replyTime:"1天前"
+          avatarUrl:
+            "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
+          userName: "用户",
+          content: "这水母针不戳",
+          replyTime: "现在",
         },
-        {
-          avatarUrl:"https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
-          userName:"游客",
-          content:"这个水母真丑，丑的一批~~丑的一批~~丑的一批~~丑的一批~~丑的一批~~丑的一批~~丑的一批~~丑的一批~~丑的一批~~丑的一批~~丑的一批~~丑的一批~~丑的一批~~",
-          replyTime:"1天前"
-        },
-        {
-          avatarUrl:"https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
-          userName:"游客",
-          content:"这个水母真不错，真不错，真不错，真不错，针不戳针不戳针不戳针不戳针不戳针不戳针不戳针不戳针不戳~~",
-          replyTime:"1天前"
-        }
-      ]
+      ],
     };
   },
-  mounted(){
+  mounted() {
+    // 这里console.log props的数据还没有过来，应该是网络数据请求的原因，组件已经创建，但是数据还没到父传子的程度。
+    // 解决方法：父组件里的子组件标签用v-if="blboid != 0"
     console.log(this.comments);
+    this.comments.map((item) => {
+      this.commentInfo.push({
+        avatarUrl:"https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
+        fromUid:item.fromUid,
+        id:item.id,
+        content: item.content,
+        replyTime: item.time,
+        sonMessages:item.sonmessages
+      });
+    });
+    console.log(this.commentInfo);
   },
   methods: {
     commentArticle() {
-    this.$store.commit('cookie/getToken')
+      this.$store.commit("cookie/getToken");
       console.log(this.textarea);
-      let token = this.$store.state.cookie.token
+      let token = this.$store.state.cookie.token;
       // post 请求不行
       console.log(token);
       // axios({
@@ -110,8 +138,48 @@ export default {
       }
       api.get('/Blob/CommentBlob',params).then(res => {
         console.log(res);
-      })
+      });
     },
+    commentUserComment(e){
+      const id = e.id
+      const fromUid = e.fromUid
+      this.$store.commit("cookie/getToken");
+      let token = this.$store.state.cookie.token;
+      // post 请求不行
+      axios({
+        url: "/api/Blob/submitCommentBlob",
+        method: "get",
+        params: {
+          ToUid: fromUid, //一级评论的userid
+          blobid: this.$route.params.id, 
+          content: '我是一个er级评论-1',
+          messageid:fromUid, // 一级评论的id 或者评论二级评论时：二级评论的messageid
+          token: token,
+        },
+      }).then((res) => {
+        console.log(res);
+      });
+    },
+commentUserSecondComment(e){
+      const fromUid = e.fromUid
+      const messageId = e.messageid
+      this.$store.commit("cookie/getToken");
+      let token = this.$store.state.cookie.token;
+      // post 请求不行
+      axios({
+        url: "/api/Blob/submitCommentBlob",
+        method: "get",
+        params: {
+          ToUid: fromUid, //一级评论的userid
+          blobid: this.$route.params.id, 
+          content: '我是一个三级评论-2',
+          messageid:messageId, // 一级评论的id 或者评论二级评论时：二级评论的messageid
+          token: token,
+        },
+      }).then((res) => {
+        console.log(res);
+      });
+    }
   },
 };
 </script>
@@ -153,50 +221,87 @@ export default {
     }
     .comment-ul {
       padding-inline-start: 10px;
-      .comment-li{
-        list-style-type:none;
+      .comment-li {
+        list-style-type: none;
         padding: 10px 0;
         border-bottom: #eee 1px solid;
-        &:nth-last-child(1){
+        &:nth-last-child(1) {
           border: none;
         }
         .avatar {
           width: 28px;
           height: 28px;
         }
-        .user-comment{
+        .user-comment {
           display: flex;
           // align-items: center;
-          .user-name{
+          .user-name {
             // 强制不换行，文本不会换行，文本会在在同一行上继续，直到遇到 br 标签为止。
             white-space: nowrap;
-            padding-top: 4px;
-            padding-left: 5px;
+            padding-top: 8px;
+            padding-left: 14px;
             font-size: 14px;
             color: #555666;
           }
-          .content{
-            padding-top: 4px;
+          .content {
+            padding-top: 8px;
             color: #222226;
             font-size: 14px;
             .reply-time {
+              white-space: nowrap;
+              padding-left: 5px;
+              font-size: 13px;
+              color: #6b6b6b;
+            }
+            .reply {
+              white-space: nowrap;
+              padding-left: 5px;
+              font-size: 14px;
+              color: #5893c2;
+              cursor: pointer;
+            }
+          }
+        }
+        .user-comment-second {
+
+           
+          // align-items: center;
+          
+          .sonMessage {
+            display: flex;
+            margin: 12px 0 0 42px;
+              .user-name {
+            // 强制不换行，文本不会换行，文本会在在同一行上继续，直到遇到 br 标签为止。
             white-space: nowrap;
+            padding-top: 6px;
             padding-left: 5px;
             font-size: 13px;
-            color: #6b6b6b;
+            color: #555666;
           }
-          .reply {
-            white-space: nowrap;
-            padding-left: 5px;
-            font-size: 14px;
-            color: #5893c2;
-            cursor: pointer;
+          .content {
+            padding-top: 6px;
+            color: #222226;
+            font-size: 13px;
+            .reply-time {
+              white-space: nowrap;
+              padding-left: 6px;
+              font-size: 12px;
+              color: #6b6b6b;
+            }
+            .reply {
+              white-space: nowrap;
+              padding-left: 5px;
+              font-size: 12px;
+              color: #5893c2;
+              cursor: pointer;
+            }
           }
+            
           }
-          
+        
         }
       }
     }
-     }
+  }
 }
 </style>

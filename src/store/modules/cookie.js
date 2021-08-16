@@ -1,9 +1,5 @@
 import Cookies from 'js-cookie'
 
-// const storeLocalStore = function(state) {
-//     window.localStorage.setItem("userMsg",JSON.stringify(state));
-// }
-
 const state ={
     token:''
 }

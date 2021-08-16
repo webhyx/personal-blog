@@ -7,6 +7,10 @@
             <div class="icon iconfont" :class="item.icon"></div>
             <div class="text">{{item.text}}</div>
           </li>
+          <li class="nav-li" @click="toPersonal">
+            <div class="icon iconfont icon-wode"></div>
+            <div class="text">我的</div>
+          </li>
         </ul>
       </div>
   </div>
@@ -34,10 +38,6 @@ export default {
           text:'联系'
         },
          {
-          icon:'icon-wode',
-          text:'我的'
-        },
-         {
           icon:'icon-biaoqian',
           text:'标签'
         },
@@ -45,7 +45,20 @@ export default {
     }
   },
   methods:{
-
+    toPersonal(){
+      this.$store.commit('cookie/getToken')
+    const token = this.$store.state.cookie.token
+    if( token && token != 0){
+      this.$router.push('personalHome')
+    } else{
+      this.$store.commit('login/toPath','personalHome')
+      this.$router.push('login')
+      this.$message({
+        message: '请先登陆！',
+        type: 'warning'
+      })
+    }
+    }
   }
 }
 </script>

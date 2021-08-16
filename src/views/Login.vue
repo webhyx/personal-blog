@@ -31,29 +31,24 @@ export default {
   },
   methods:{
     login(account,password){
-      // axios({
-      //   method: "get",
-      //   // url: "http://121.40.125.179/token",
-      //   url:"/api/token",
-      //   params: {
-      //     email: account,
-      //     password: password,
-      //   },
-      // })
-      api.post('/token',{
+      api.get('/token',{
         email:account,
         password:password
       }).then((res) => {
         // 账号密码正确或者失败都返回一个具体的code
-        //&& res.data.msg.token
-        console.log(res);
         if (res.data.code === 200 && res.data.result.token) {
           // 清除token
           this.$store.commit('cookie/clearToken')
           // 设一个token，过期时间为会话结束
           this.$store.commit('cookie/setToken',res.data.result.token)
           console.log(res.data.result.token);
-          this.$router.push("/home");
+          let toPath = this.$store.state.login.path
+          if(toPath !== ''){
+            this.$router.push(toPath);
+          } else{
+            this.$router.push("home");
+          }
+          
         } else if(res.data.code === 400){
           this.$message('账号或密码错误！')
         } else {

@@ -5,11 +5,11 @@ module.exports = {
       proxy:{
           //配置跨域
           '/api': {
-            target: 'http://www.hhsunset.top',
-            ws: true,
+            target: 'https://www.hhsunset.top',
+            // ws: true,
             changOrigin: true,
             pathRewrite: {
-              '^/api': ''
+              '^/api': '/'
             }
           }
       }
