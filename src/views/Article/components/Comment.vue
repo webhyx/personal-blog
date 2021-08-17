@@ -28,29 +28,72 @@
             <div class="avatar">
               <el-avatar size="medium" :src="item.avatarUrl"></el-avatar>
             </div>
-            <span class="user-name" v-if="userId === item.fromUid">作者:　</span>
+            <span class="user-name" v-if="userId === item.fromUid"
+              >作者:　</span
+            >
             <span class="user-name" v-else>游客{{ item.fromUid }}：</span>
             <span class="content">
               {{ item.content }}
               <span class="reply-time">{{ item.replyTime }}</span>
               <!-- No v-for的数据 data-的内容只能找data中定义的，:data-id="item.fromUid" 是undefined -->
               <!-- 解决方法：直接传item作为参数，在方法中处理item对象 -->
-              <span class="reply" @click="commentUserComment(item)">回复</span>
+              <span class="reply" >
+               
+                  <span class="showInput" v-show="isShowInput1[index]" :data-index="index" ref="comment">
+                    <el-input
+                      type="textarea"
+                      autosize
+                      placeholder="请输入内容"
+                      v-model="textarea2"
+                    >
+                    </el-input>
+                   <span @click="commentUserComment(item)">　确定</span>
+                  </span
+                  ><span @click="showInput1(index)" v-show="!isShowInput1[index]">回复</span>
+                  <span @click="closeInput1(index)" v-show="isShowInput1[index]">　取消</span>
+                  
+              </span>
             </span>
           </div>
-          <div class="user-comment-second" v-if="item.sonMessages && Number(item.sonMessages) != 0">
-           <div class="sonMessage" v-for="(sonItems,sonIndex) in item.sonMessages" :key="sonIndex" >
+          <div
+            class="user-comment-second"
+            v-if="item.sonMessages && Number(item.sonMessages) != 0"
+          >
+            <div
+              class="sonMessage"
+              v-for="(sonItems, sonIndex) in item.sonMessages"
+              :key="sonIndex"
+            >
               <div class="avatar">
-              <el-avatar size="small" :src="item.avatarUrl"></el-avatar>
+                <el-avatar size="small" :src="item.avatarUrl"></el-avatar>
+              </div>
+              <span class="user-name" v-if="userId === sonItems.fromUid"
+                >作者:　</span
+              >
+              <span class="user-name" v-else
+                >游客{{ sonItems.fromUid }}:　</span
+              >
+              <span class="content">
+                {{ sonItems.content }}
+                <span class="reply-time">{{ sonItems.time }}</span>
+                <span class="reply">
+                  <span class="showInput" v-if="isShowInput2">
+                    <el-input
+                      type="textarea"
+                      autosize
+                      placeholder="请输入内容"
+                      v-model="textarea3"
+                    >
+                    </el-input>
+                    <el-button @click="commentUserSecondComment(sonItems)"
+                      >确定</el-button
+                    > <span >回复</span>
+                    </span
+                  >
+                  </span
+                >
+              </span>
             </div>
-            <span class="user-name" v-if="userId === sonItems.fromUid">作者:　</span>
-            <span class="user-name" v-else>游客{{sonItems.fromUid}}:　</span>
-            <span class="content">
-              {{sonItems.content}}
-              <span class="reply-time">{{sonItems.time}}</span>
-              <span class="reply" @click="commentUserSecondComment(sonItems)">回复</span>
-            </span>
-           </div>
           </div>
         </li>
       </ul>
@@ -59,7 +102,7 @@
 </template>
 
 <script>
-import api from '@/api'
+import api from "@/api";
 export default {
   props: {
     blobId: {
@@ -84,11 +127,14 @@ export default {
   data() {
     return {
       textarea: "",
+      textarea2: "",
+      textarea3: "",
+      isShowInput1: [],
+      isShowInput2:false,
       commentNum: 0,
       showNoComment: false,
-      commentInfo: [
-      ],
-      commentSecondInfo:[]
+      commentInfo: [],
+      commentSecondInfo: [],
     };
   },
   mounted() {
@@ -97,21 +143,39 @@ export default {
     console.log(this.comments);
     this.comments.map((item) => {
       this.commentInfo.push({
-        avatarUrl:"https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
-        fromUid:item.fromUid,
-        id:item.id,
+        avatarUrl:
+          "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
+        fromUid: item.fromUid,
+        id: item.id,
         content: item.content,
         replyTime: item.time,
-        sonMessages:item.sonmessages
+        sonMessages: item.sonmessages,
       });
-      // this.commentSecondInfo.push(
-      //   item.sonmessages
-      // );
+      this.isShowInput1.push(false)
     });
     // 二级评论单独作为个数组：区分 二级评论 和评论二级评论的二级评论
     console.log(this.commentInfo);
   },
   methods: {
+    showInput1(index){
+      // v-show绑定数组的元素如果直接改变值是反映不到dom中的
+      // this.isShowInput1[index] = true  错误
+      this.$set(this.isShowInput1,index,true);  // $set才行
+
+      // for of 可以跳出循环 ，map跳不出来，会一直循环全部，
+
+      // for(const item of this.$refs.comment) {
+      //   if(item.dataset.index == index) {
+      //     console.log('找到啦');
+      //     console.log(item.dataset.index);
+      //     break;
+      //   }
+      // }
+    },
+    closeInput1(index){
+      this.$set(this.isShowInput1,index,false); 
+      this.textarea2 = ''
+    },
     commentArticle() {
       this.$store.commit("cookie/getToken");
       console.log(this.textarea);
@@ -119,50 +183,58 @@ export default {
       // post 请求不行
       console.log(token);
       let params = {
-        ToUid:this.userId,
-          blobid:this.$route.params.id,
-          content:this.textarea,
-          token:token
+        ToUid: this.userId,
+        blobid: this.$route.params.id,
+        content: this.textarea,
+        token: token,
+      };
+      api.get("/Blob/CommentBlob", params).then((res) => {
+        console.log(res);
+      });
+    },
+    commentUserComment(e) {
+      const id = e.id;
+      const fromUid = e.fromUid;
+      this.$store.commit("cookie/getToken");
+      let token = this.$store.state.cookie.token;
+      // post 请求不行
+      if(this.textarea2){
+        let params = {
+        ToUid: fromUid, //一级评论的userid
+        blobid: this.$route.params.id,
+        content: this.textarea2,
+        messageid: fromUid, // 一级评论的id 或者评论二级评论时：二级评论的messageid
+        token: token,
+      };
+      api.get("/Blob/submitCommentBlob", params).then((res) => {
+        console.log(res);
+      });
+      }else {
+        this.$message({
+          message: '评论内容不能为空！',
+          type: 'warning'
+        })
       }
-      api.get('/Blob/CommentBlob',params).then(res => {
-        console.log(res);
-      });
+      
     },
-    commentUserComment(e){
-      const id = e.id
-      const fromUid = e.fromUid
+    commentUserSecondComment(e) {
+      const fromUid = e.fromUid;
+      const messageId = e.messageid;
+      let content = this.content + "[@3]";
       this.$store.commit("cookie/getToken");
       let token = this.$store.state.cookie.token;
       // post 请求不行
       let params = {
-          ToUid: fromUid, //一级评论的userid
-          blobid: this.$route.params.id, 
-          content: '我是一个er级评论-1',
-          messageid:fromUid, // 一级评论的id 或者评论二级评论时：二级评论的messageid
-          token: token,
-        }
-      api.get('/Blob/submitCommentBlob',params).then((res) => {
+        ToUid: fromUid, //一级评论的userid
+        blobid: this.$route.params.id,
+        content: "我是一个三级评论[@3]",
+        messageid: messageId, // 一级评论的id 或者评论二级评论时：二级评论的messageid
+        token: token,
+      };
+      api.get("/Blob/submitCommentBlob", params).then((res) => {
         console.log(res);
       });
     },
-commentUserSecondComment(e){
-      const fromUid = e.fromUid
-      const messageId = e.messageid
-      let content = this.content + '[@3]'
-      this.$store.commit("cookie/getToken");
-      let token = this.$store.state.cookie.token;
-      // post 请求不行
-      let params = {
-          ToUid: fromUid, //一级评论的userid
-          blobid: this.$route.params.id, 
-          content: '我是一个三级评论[@3]',
-          messageid:messageId, // 一级评论的id 或者评论二级评论时：二级评论的messageid
-          token: token,
-        }
-      api.get('/Blob/submitCommentBlob',params).then((res) => {
-        console.log(res);
-      });
-    }
   },
 };
 </script>
@@ -237,51 +309,52 @@ commentUserSecondComment(e){
               color: #6b6b6b;
             }
             .reply {
+              
               white-space: nowrap;
               padding-left: 5px;
               font-size: 14px;
               color: #5893c2;
               cursor: pointer;
+              .el-textarea {
+                margin-top: 6px;
+              }
+              
             }
           }
         }
         .user-comment-second {
-
-           
           // align-items: center;
-          
+
           .sonMessage {
             display: flex;
             margin: 12px 0 0 42px;
-              .user-name {
-            // 强制不换行，文本不会换行，文本会在在同一行上继续，直到遇到 br 标签为止。
-            white-space: nowrap;
-            padding-top: 6px;
-            padding-left: 5px;
-            font-size: 13px;
-            color: #555666;
-          }
-          .content {
-            padding-top: 6px;
-            color: #222226;
-            font-size: 13px;
-            .reply-time {
+            .user-name {
+              // 强制不换行，文本不会换行，文本会在在同一行上继续，直到遇到 br 标签为止。
               white-space: nowrap;
-              padding-left: 6px;
-              font-size: 12px;
-              color: #6b6b6b;
-            }
-            .reply {
-              white-space: nowrap;
+              padding-top: 6px;
               padding-left: 5px;
-              font-size: 12px;
-              color: #5893c2;
-              cursor: pointer;
+              font-size: 13px;
+              color: #555666;
+            }
+            .content {
+              padding-top: 6px;
+              color: #222226;
+              font-size: 13px;
+              .reply-time {
+                white-space: nowrap;
+                padding-left: 6px;
+                font-size: 12px;
+                color: #6b6b6b;
+              }
+              .reply {
+                white-space: nowrap;
+                padding-left: 5px;
+                font-size: 12px;
+                color: #5893c2;
+                cursor: pointer;
+              }
             }
           }
-            
-          }
-        
         }
       }
     }

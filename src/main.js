@@ -9,8 +9,12 @@ import ElementUI from 'element-ui';
 import './assets/fonts/iconfont.css'
 import './assets/fonts/iconfont.js'
 
-import axios from 'axios' 
+import axios from 'axios'
 import VueAxios from 'vue-axios'
+import request from './api/index.js'
+Vue.prototype.$get = request.get
+Vue.prototype.$post = request.post
+
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
 Vue.config.productionTip = false

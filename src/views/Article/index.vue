@@ -67,14 +67,6 @@ export default {
     window.scrollTo(0, 0);
 
     this.blogID = this.$route.params.id;
-    // console.log(this.blogID);
-    // axios({
-    //   url: "/api/Blob/GetBlobByBlobId",
-    //   method: "get",
-    //   params: {
-    //     blobid: this.blogID,
-    //   },
-    // })
     api.get('/Blob/GetBlobByBlobId',{blobid:this.blogID}).then((res) => {
       console.log(res);
       this.imgPaths = res.data.result.paths;

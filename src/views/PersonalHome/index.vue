@@ -62,16 +62,46 @@ export default {
       //   method:"get",
       // })
       api.get(url).then(res => {
+        console.log('res');
         console.log(res);
         let articleArr = res.data.result
+      //   if(articleArr.paths.length != 0) {
+      //    articleArr.paths = articleArr.paths.map((item) => {
+      //   item = `https://www.hhsunset.top${item}`;
+      //   return item;
+      // });
+
+      //   }
+
+        // 性能可能不行
         if(contentType == 'draft') {
           this.draftContent = articleArr.map( item => {
           let brief = this.trimHtml(item.content)
           item.brief = brief
+          // 将content中img的src 改过来
+          if(item.paths.length !=0) {
+            item.paths = item.paths.map(it => {
+              it = `https://www.hhsunset.top${it}`;
+              return it
+            })
+          }
+          item.content = item.content.replace(/\$\[]/g,item.paths[0])
           return item
         })
         } else {
           this.blogContent = articleArr.map( item => {
+      //     this.imgPaths = this.imgPaths.map((item) => {
+      //   item = `/api${item}`;
+      //   return item;
+      // });
+      // this.content = this.content.replace(/\$\[]/g, this.imgPaths[0]);
+          if(item.paths.length !=0) {
+            item.paths = item.paths.map(it => {
+              it = `https://www.hhsunset.top${it}`;
+              return it
+            })
+          }
+          item.content = item.content.replace(/\$\[]/g,item.paths[0])
           let brief = this.trimHtml(item.content)
           item.brief = brief
           return item

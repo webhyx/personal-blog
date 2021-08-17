@@ -22,8 +22,8 @@ export default {
   components: {  },
   data() {
     return {
-      account:'',
-      password:''
+      account:'740006840@qq.com',
+      password:'huangyuxuan'
     };
   },
   mounted(){

@@ -49,8 +49,7 @@ import ArticleItem from "./components/Article.vue";
 import Introduction from "@/components/Navigation.vue";
 import HotTag from "@/components/HotTag.vue";
 
-// import axios from "axios";
-import api from '@/api'
+// import api from '@/api'
 
 export default {
   components: {
@@ -73,15 +72,7 @@ export default {
     // 获取部分博客
     gerUserArticle(start, end) {
       this.$store.commit("cookie/getToken");
-      // axios({
-      //   url: "/api/Blob/getPartPopularBlobDesc",
-      //   method: "get",
-      //   params: {
-      //     start: start,
-      //     end: end,
-      //   },
-      // })
-      api.get('/Blob/getPartPopularBlobDesc',{
+      this.$get('/Blob/getPartPopularBlobDesc',{
         start:start,
         end:end
       })

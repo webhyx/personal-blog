@@ -20,7 +20,8 @@
 
 <script>
 import Tinymce from "@/components/Tinymce";
-import api from '@/api'
+import axios from 'axios'
+
 export default {
   name: "Home",
   components: { Tinymce },
@@ -43,18 +44,9 @@ export default {
       // }
       data.append("content", this.content);
       data.append("title", this.title);
-      // var options = {
-      //   url: `/api/Blob/DraftUpdate?token=${this.$store.state.cookie.token}`,
-      //   method: "post",
-      //   headers: {
-      //     "Content-Type": "multipart/form-data",
-      //   }, 
-      //   data: data,
-      // };
-
       //send request
       
-      api.post(`Blob/DraftUpdate?token=${this.$store.state.cookie.token}`,data)
+      this.$post(`Blob/DraftUpdate?token=${this.$store.state.cookie.token}`,data)
         .then((res) => {
           console.log(res);
           if (res.data.code == 200) {
@@ -75,9 +67,9 @@ export default {
     publish() {
       console.log('1');
       let data = new FormData();
-     if(document.querySelector("input[type=file]").files[0]){
-        data.append("files",document.querySelector("input[type=file]").files[0]);
-      }
+    //  if(document.querySelector("input[type=file]").files[0]){
+    //     data.append("files",document.querySelector("input[type=file]").files[0]);
+    //   }
       // <img class="wscnph" src="${item}" >
       let txtContent= this.content.replace(/<+img class="wscnph" src=".*?"+\s\/>/g ,"<img class='wscnph' style='max-width:650px' src='$[]'/>")
       console.log(txtContent);
@@ -88,15 +80,16 @@ export default {
       而data是添加到请求体（body）中的， 用于post请求。
        */
       var options = {
-        url: `/api/Blob/BlobUpdate?token=${this.$store.state.cookie.token}`,
+        url: `https://www.hhsunset.top/Blob/BlobUpdate?token=${this.$store.state.cookie.token}`,
         method: "post",
         headers: {
           "Content-Type": "multipart/form-data",
         },
         data: data,
       };
-
+      let url = `Blob/BlobUpdate?token=${this.$store.state.cookie.token}`
       //send request
+      // this.$post(url,data)
       axios(options)
         .then((res) => {
           console.log(res);
@@ -115,27 +108,7 @@ export default {
         });
 
         this.$store.commit('article/clearFileList')
-    },
-    upDist() {
-      let data = new FormData();
-      data.append("token", this.$store.state.cookie.token);
-      data.append("file", document.querySelector("input[type=file]").files[0]);
-      var options = {
-        url: `http://www.hhsunset.top/NodeJsDeployment`,
-        method: "post",
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-        data: data,
-      };
-      axios(options)
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
+    }
   },
 };
 </script>
